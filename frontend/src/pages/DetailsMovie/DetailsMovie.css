@@ -1,0 +1,33 @@
+.MoviePage {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.NotMoviePage {
+    margin-top: 50px;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    max-height: 300px;
+}
+
+.MoviePresentation {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-left: calc(25vw - 100px);
+    margin-right: calc(25vw - 100px);
+}
+
+
+.MovieText {
+    margin-left: 3vw ;
+    min-width: 250px;
+    font-size: calc(0.9em + 0.3vw);
+}

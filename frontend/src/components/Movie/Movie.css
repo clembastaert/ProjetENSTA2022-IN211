@@ -1,0 +1,15 @@
+.movie 
+{   
+    text-align: center;
+    font-size: 1em;
+    width: 200px;
+    margin-top: 10px;
+}
+
+img {
+    transition: transform 0.2s ease-out;
+}
+
+img:hover {
+    transform: scale(1.07);
+}

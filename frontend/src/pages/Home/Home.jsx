@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './Home.css';
+import React from 'react';
+import Movie from '../../components/Movie/Movie';
 
-function Home() {
+function Home({ movieName, movies }) {
+  const filteredMovies = movies.filter((movie) => {
+    return movie.title.toLowerCase().includes(movieName.toLowerCase());
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="MovieList">
+        {filteredMovies.map((movie) => (
+          <Movie movie={movie} />
+        ))}
+      </div>
     </div>
   );
 }

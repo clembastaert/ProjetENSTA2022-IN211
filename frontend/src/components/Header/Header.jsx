@@ -1,26 +1,20 @@
-import { Link } from 'react-router-dom';
 import './Header.css';
+import Navbar from './Navbar';
+import useSticky from './useSticky.jsx';
 
-const Header = () => {
+function Header({ movieName, setMovieName }) {
+  const { isSticky, element } = useSticky();
+
   return (
-    <div className="Header-container">
-      <Link className="Link" to="/">
-        Home
-      </Link>
-      <div>|</div>
-      <Link className="Link" to="/counter">
-        Counter
-      </Link>
-      <div>|</div>
-      <Link className="Link" to="/users">
-        Users
-      </Link>
-      <div>|</div>
-      <Link className="Link" to="/about">
-        About
-      </Link>
+    <div>
+      <Navbar
+        sticky={isSticky}
+        movieName={movieName}
+        setMovieName={setMovieName}
+        ref={element}
+      />
     </div>
   );
-};
+}
 
 export default Header;
