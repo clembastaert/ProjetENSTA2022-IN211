@@ -2,6 +2,7 @@
     margin-top: 50px;
     display: flex;
     flex-direction: column;
+    color: #5784BA;
 }
 
 .NotMoviePage {
@@ -15,6 +16,7 @@ h1 {
 
 img {
     max-height: 300px;
+    transform: none;
 }
 
 .MoviePresentation {
@@ -27,7 +29,7 @@ img {
 
 
 .MovieText {
-    margin-left: 3vw ;
+    margin-left: 3vw;
     min-width: 250px;
     font-size: calc(0.9em + 0.3vw);
 }

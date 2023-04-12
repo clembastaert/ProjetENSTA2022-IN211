@@ -1,9 +1,18 @@
 import React from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/popcorn.png';
 
 function Navbar({ movieName, setMovieName }) {
+  const navigate = useNavigate();
+
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      navigate('/search');
+    }
+  };
+
   return (
     <nav className="navbar-sticky">
       <div className="navbar-left">
@@ -15,16 +24,23 @@ function Navbar({ movieName, setMovieName }) {
         <Link className="Link" to="/counter">
           <p>Catégories</p>
         </Link>
-        <div className="navbar--search">
+        <form className="navbar--search">
+          <Link className="Link" to="/search">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </Link>
           <input
             type="text"
             placeholder="Rechercher un film"
             value={movieName}
             className="navbar--search-input"
             onChange={(e) => setMovieName(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <i className="fa-solid fa-magnifying-glass"></i>
-        </div>
+          <i
+            className="fa-solid fa-circle-xmark"
+            onClick={() => setMovieName('')}
+          ></i>
+        </form>
       </div>
       <div className="navbar--link-connection">
         <Link className="Link" to="/users">

@@ -7,6 +7,7 @@ import { Root } from './components/Root/Root';
 import Categories from './pages/Categories/Categories';
 import Users from './pages/Users/Users';
 import Home from './pages/Home/Home';
+import Search from './pages/Search/Search';
 import DetailsMovie from './pages/DetailsMovie/DetailsMovie';
 
 function useFetchMovies() {
@@ -34,11 +35,12 @@ function App() {
   return (
     <Root movieName={movieName} setMovieName={setMovieName}>
       <Routes>
-        <Route
-          path="/"
-          element={<Home movieName={movieName} movies={movies} />}
-        />
+        <Route path="/" element={<Home movies={movies} />} />
         <Route path="categories" element={<Categories />} />
+        <Route
+          path="search"
+          element={<Search movieName={movieName} movies={movies} />}
+        />
         <Route path="users" element={<Users />} />
         <Route path="/films/:id" element={<DetailsMovie movies={movies} />} />
       </Routes>

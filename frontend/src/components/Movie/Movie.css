@@ -1,13 +1,14 @@
-.movie 
-{   
+.movie {
     text-align: center;
     font-size: 1em;
     width: 200px;
     margin-top: 10px;
+    color: #5784BA;
 }
 
 img {
     transition: transform 0.2s ease-out;
+    border-radius: 10px;
 }
 
 img:hover {
