@@ -21,8 +21,8 @@ function Navbar({ movieName, setMovieName }) {
             <img src={Logo} alt="logo" className="navbar--logo" />
           </div>
         </Link>
-        <Link className="Link" to="/counter">
-          <p>Catégories</p>
+        <Link className="Link" to="/categories">
+          <i className="fa-solid fa-list"></i>
         </Link>
         <form className="navbar--search">
           <Link className="Link" to="/search">
@@ -44,7 +44,7 @@ function Navbar({ movieName, setMovieName }) {
       </div>
       <div className="navbar--link-connection">
         <Link className="Link" to="/users">
-          <p>Se connecter</p>
+          <i className="fa-solid fa-user"></i>
         </Link>
       </div>
     </nav>
