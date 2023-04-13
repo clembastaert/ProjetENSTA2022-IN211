@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Movie from '../../components/Movie/Movie';
+import './Categories.css';
 
 function Categories({ movies }) {
   const { id } = useParams();
@@ -9,12 +10,10 @@ function Categories({ movies }) {
   );
 
   return (
-    <div className="App">
-      <div className="MovieList">
-        {filteredMovies.map((movie) => (
-          <Movie movie={movie} />
-        ))}
-      </div>
+    <div className="MovieListCat">
+      {filteredMovies.map((movie) => (
+        <Movie movie={movie} />
+      ))}
     </div>
   );
 }

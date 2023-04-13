@@ -16,16 +16,13 @@ function Navbar({ movieName, setMovieName }) {
   return (
     <nav className="navbar-sticky">
       <div className="navbar-left">
-        <Link className="Link" to="/">
+        <Link className="LinkNB" to="/">
           <div className="navbar--logo-holder">
             <img src={Logo} alt="logo" className="navbar--logo" />
           </div>
         </Link>
-        <Link className="Link" to="/categories">
-          <i className="fa-solid fa-list"></i>
-        </Link>
         <form className="navbar--search">
-          <Link className="Link" to="/search">
+          <Link className="LinkNB" to="/search">
             <i className="fa-solid fa-magnifying-glass"></i>
           </Link>
           <input
@@ -43,7 +40,7 @@ function Navbar({ movieName, setMovieName }) {
         </form>
       </div>
       <div className="navbar--link-connection">
-        <Link className="Link" to="/users">
+        <Link className="LinkNB" to="/users">
           <i className="fa-solid fa-user"></i>
         </Link>
       </div>

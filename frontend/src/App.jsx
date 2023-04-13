@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { Root } from './components/Root/Root';
 import Categories from './pages/Categories/Categories';
-import CategoriesMenu from './pages/CategoriesMenu/CategoriesMenu';
 import Users from './pages/Users/Users';
 import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
@@ -45,7 +44,6 @@ function App() {
     <Root movieName={movieName} setMovieName={setMovieName}>
       <Routes>
         <Route path="/" element={<Home movies={movies} />} />
-        <Route path="/categories" element={<CategoriesMenu />} />
         <Route
           path="/categories/:id"
           element={<Categories movies={movies} />}

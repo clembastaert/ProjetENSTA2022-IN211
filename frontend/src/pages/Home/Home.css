@@ -1,9 +1,24 @@
 .MovieList {
-  margin-top: 50px;
-  display:flex;
-  column-gap: 50px;
-  row-gap: 25px;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
+    display: flex;
+    column-gap: 25px;
+    row-gap: 25px;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+
+.categories {
+    margin-top: 55px;
+}
+
+.LinkCM {
+    color: #5784BA;
+    font-size: 1.3em;
+    margin-left: 10px;
+}
+
+.LinkCM:hover {
+    color: #fc9149;
 }

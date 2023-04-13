@@ -44,7 +44,7 @@
 .navbar--link-connection {
   display: flex;
   justify-content: flex-end;
-  padding-right: 25px;
+  padding-right: 35px;
 }
 
 #p {
@@ -58,7 +58,7 @@
   background-color: #B6D8F2;
   justify-content: space-between;
   border-radius: 10px;
-  width: calc(100px + 15vw);
+  width: calc(120px + 15vw);
 }
 
 .navbar--search-input {
@@ -90,12 +90,12 @@ input:focus {
   outline: none;
 }
 
-.Link {
+.LinkNB {
   color: #B6D8F2;
   text-decoration: none;
 }
 
-.Link:hover {
+.LinkNB:hover {
   color: #fc9149;
 }
 

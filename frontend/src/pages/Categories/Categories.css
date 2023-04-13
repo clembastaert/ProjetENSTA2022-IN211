@@ -1,0 +1,9 @@
+.MovieListCat {
+    margin-top: 50px;
+    display: flex;
+    column-gap: 25px;
+    row-gap: 25px;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}

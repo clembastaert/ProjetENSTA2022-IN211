@@ -17,7 +17,7 @@ function Search({ movieName, movies }) {
 
   return (
     <div className="App">
-      <div className="MovieList">
+      <div className="MovieListP">
         {filteredMovies.map((movie) => (
           <Movie movie={movie} />
         ))}

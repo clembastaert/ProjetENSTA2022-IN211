@@ -4,13 +4,13 @@
     width: 200px;
     margin-top: 10px;
     color: #5784BA;
+    transition: transform 0.2s ease-out;
 }
 
 img {
-    transition: transform 0.2s ease-out;
     border-radius: 10px;
 }
 
-img:hover {
+.movie:hover {
     transform: scale(1.07);
 }
