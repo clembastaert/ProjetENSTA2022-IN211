@@ -1,27 +1,60 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
-import Movies from '../entities/Movies.js';
+import Movies from '../entities/movies.js';
+import axios from 'axios';
+import { IsNull } from 'typeorm';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log("L'utilisateur accède à l'URL /api/movies");
   appDataSource
-    .getRepository(Movies)
-    .then(function (movies) {
-      res.status(200).json(movies);
-    })
-    .catch(function (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error while retrieving movies' });
-    });
+  .getRepository(Movies)
+  .find({})
+  .then(function (movies) {
+    res.json({ movies: movies });
+  })
+  .catch(function (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error while finding movies'});
+  });
+});
+
+router.get('/tmdb', async (req, res) => {
+  try {
+    for (let j = 1; j < 100; j++){
+      const response = await axios.get('https://api.themoviedb.org/3/trending/all/day?', {
+        params: {
+          api_key: '15d2ea6d0dc1d476efbca3eba2b9bbfb',
+          language: 'fr-FR',
+          page: j,
+        },
+      });
+      const movies = response.data.results;
+      const MoviesRepository = appDataSource.getRepository(Movies);
+      for (let i = 0; i < movies.length; i++) {
+        const movie = movies[i];
+        if (!movie.title || !movie.release_date) continue;
+        const existingMovie = await MoviesRepository.findOne({ where: { title: movie.title } });
+        if (existingMovie) continue;
+        const newMovie = MoviesRepository.create({
+          title: movie.title,
+          release_date: movie.release_date,
+        });
+        await MoviesRepository.insert(newMovie);
+      }
+    }
+    res.status(200).json({ message: 'Movies successfully added to the database' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error while retrieving movies from TMDB' });
+  }
 });
 
 router.post('/new', function (req, res) {
   const MoviesRepository = appDataSource.getRepository(Movies);
   const newMovie = MoviesRepository.create({
-    Title: req.body.Title,
-    ReleaseDate: req.body.ReleaseDate,
+    title: req.body.title,
+    release_date: req.body.release_date,
   });
   MoviesRepository.insert(newMovie)
     .then(function (newDocument) {

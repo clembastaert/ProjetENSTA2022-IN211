@@ -2,7 +2,7 @@ import typeorm from "typeorm";
 
 const { MigrationInterface, QueryRunner } = typeorm;
 
-module.exports = class Movies1680513460388 {
+export default class Movies1680513460388 {
     name = 'Movies1680513460388'
 
     async up(queryRunner) {

@@ -5,12 +5,16 @@
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
-    align-items: center;
+    align-items: top;
+    padding: 10px;
 }
-
 
 .categories {
     margin-top: 55px;
+}
+
+.categorie {
+    padding: 20px;
 }
 
 .LinkCM {

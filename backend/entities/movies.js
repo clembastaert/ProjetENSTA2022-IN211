@@ -8,11 +8,11 @@ const Movies = new typeorm.EntitySchema({
       generated: 'uuid',
       type: String,
     },
-    Title: {
+    title: {
       type: String,
       unique: true,
     },
-    ReleaseDate: { type: Date },
+    release_date: { type: Date },
   },
 });
 
