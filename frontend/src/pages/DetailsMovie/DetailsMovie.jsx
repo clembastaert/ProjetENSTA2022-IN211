@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import Ratings from '../../components/Ratings/Ratings';
 import './DetailsMovie.css';
 
 function DetailsMovie({ movies }) {
@@ -30,6 +31,7 @@ function DetailsMovie({ movies }) {
           </p>
         </div>
       </div>
+      <Ratings />
     </div>
   );
 }

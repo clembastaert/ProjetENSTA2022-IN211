@@ -1,0 +1,50 @@
+.Ratings {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-left: calc(25vw - 100px);
+    margin-right: calc(25vw - 100px);
+    border-radius: 15px;
+    padding: 10px;
+    border: 3px solid #406490;
+    /*background-color: #fc91498d;*/
+    background-color: #B6D8F2;
+}
+
+.titleCommentaries {
+    font-size: 1.2em;
+    margin-block-start: 0em;
+    margin-block-end: 8px;
+}
+
+.commentaries {
+
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    padding: 5px;
+    height: 3rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #406490;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid #406490;
+    border-radius: 0.25rem;
+}
+
+.sendRating {
+    color: #B6D8F2;
+    font-size: 1.1em;
+    background-color: #406490;
+    border: 1px solid #406490;
+    align-self: flex-end;
+    width: 100px;
+    border-radius: 0.25rem;
+    margin-top: 8px;
+    transition: transform 0.1s ease-out;
+}
+
+.sendRating:hover {
+    transform: scale(1.03);
+}
