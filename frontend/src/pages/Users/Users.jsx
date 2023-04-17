@@ -1,13 +1,16 @@
 import './Users.css';
-import AddUserForm from '../../components/AddUserForm/AddUserForm';
-import UsersTable from '../../components/UsersTable/UsersTable';
+// import AddUserForm from '../../components/AddUserForm/AddUserForm';
+// import UsersTable from '../../components/UsersTable/UsersTable';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
 function Users() {
   return (
     <div className="Users-container">
-      <h1>This page displays the users</h1>
-      <AddUserForm />
-      <UsersTable />
+      {/* <AddUserForm />
+      <UsersTable /> */}
+      <LoginForm />
+      <SignUpForm />
     </div>
   );
 }

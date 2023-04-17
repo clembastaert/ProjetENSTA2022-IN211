@@ -1,11 +1,57 @@
 .Users-container {
-  margin-top: 40px;
+  margin-top: 70px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10vw;
   align-items: flex-start;
   color: #5784BA;
 }
 
 .Users-container> :not(:last-child) {
   margin-bottom: 20px;
+}
+
+.formEntry {
+  display: flex;
+  width: 90%;
+  height: 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #406490;
+  border-radius: 0.25rem;
+}
+
+.formPlace {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.formButton {
+  color: #406490;
+  font-size: calc(1rem + 0.2vw);
+  background-color: #B6D8F2;
+  border: 2px solid #406490;
+  border-radius: 0.25rem;
+  margin-top: 20px;
+}
+
+.formTitle {
+  font-size: calc(1.1em + 1vw);
+  margin-block-start: 0em;
+  margin-block-end: 0.5em;
+}
+
+.connectionForm {
+  border-radius: 30px;
+  border: 3px solid #fc9149;
+  background-color: #fc91498d;
+  padding: calc(15px + 1vw);
+  padding-top: calc(5px + 1vw);
 }
