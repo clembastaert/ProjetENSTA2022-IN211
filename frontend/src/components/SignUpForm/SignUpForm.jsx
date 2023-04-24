@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import './SignUpForm.css';
+import axios from 'axios';
 
-function SignUpForm() {
+function SignUpForm({ setConnection }) {
   const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Envoyer le formulaire via une requête AJAX
-  };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    const formData = {
+      username,
+      firstname,
+      lastname,
+      email,
+      password,
+    };
+
+    axios
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/signup`, formData)
+      .then((response) => {
+        setConnection(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -34,25 +46,25 @@ function SignUpForm() {
         />
       </div>
       <div className="formPlace">
-        <label htmlFor="firstName">Prénom</label>
+        <label htmlFor="firstname">Prénom</label>
         <input
           type="text"
-          id="firstName"
-          name="firstName"
+          id="firstname"
+          name="firstname"
           className="formEntry"
-          value={firstName}
+          value={firstname}
           onChange={(event) => setFirstName(event.target.value)}
           required
         />
       </div>
       <div className="formPlace">
-        <label htmlFor="lastName">Nom</label>
+        <label htmlFor="lastname">Nom</label>
         <input
           type="text"
-          id="lastName"
-          name="lastName"
+          id="lastname"
+          name="lastname"
           className="formEntry"
-          value={lastName}
+          value={lastname}
           onChange={(event) => setLastName(event.target.value)}
           required
         />
@@ -73,7 +85,7 @@ function SignUpForm() {
         <label htmlFor="password">Mot de passe</label>
         <div className="password-input">
           <input
-            type={showPassword ? 'text' : 'password'}
+            type="password"
             id="password"
             name="password"
             className="formEntry"
@@ -81,9 +93,6 @@ function SignUpForm() {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          {/* <span onClick={togglePasswordVisibility}>
-            {showPassword ? '👁️' : '👁️‍🗨️'}
-          </span> */}
         </div>
       </div>
       <div>

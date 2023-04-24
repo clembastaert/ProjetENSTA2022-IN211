@@ -1,11 +1,29 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Ratings from '../../components/Ratings/Ratings';
+import Comments from '../../components/Comments/Comments';
 import './DetailsMovie.css';
 
-function DetailsMovie({ movies }) {
+function DetailsMovie({ movies, connected }) {
   const { id } = useParams();
   const movie = movies.find((m) => m.id === parseInt(id));
+  const [comments, setComments] = useState([]);
+  const [sent, isSent] = useState(false);
+
+  useEffect(() => {
+    if (id !== undefined) {
+      axios
+        .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/${id}`)
+        .then((response) => {
+          setComments(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [sent]);
 
   if (!movie) {
     return (
@@ -31,7 +49,8 @@ function DetailsMovie({ movies }) {
           </p>
         </div>
       </div>
-      <Ratings />
+      <Ratings connected={connected} id_film={id} sent={sent} isSent={isSent} />
+      <Comments comments={comments} />
     </div>
   );
 }

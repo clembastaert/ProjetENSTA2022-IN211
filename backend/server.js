@@ -5,6 +5,7 @@ import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import usersRouter from './routes/users.js';
 import moviesRouter from './routes/movies.js';
+import commentsRouter from './routes/comments.js';
 import { appDataSource } from './datasource.js';
 
 const apiRouter = express.Router();
@@ -26,6 +27,7 @@ appDataSource
     });
     apiRouter.use('/users', usersRouter);
     apiRouter.use('/movies', moviesRouter);
+    apiRouter.use('/comments', commentsRouter);
     // Register API router
     app.use('/api', apiRouter);
 
@@ -34,7 +36,6 @@ appDataSource
     app.use(jsonErrorHandler); // this error handler must be registered after all middleware to catch all errors
 
     const port = parseInt(process.env.PORT || '8080');
-
     app.listen(port, () => {
       console.log(`Server listening at http://localhost:${port}`);
     });

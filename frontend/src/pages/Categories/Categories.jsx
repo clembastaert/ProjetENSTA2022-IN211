@@ -10,10 +10,13 @@ function Categories({ movies }) {
   );
 
   return (
-    <div className="MovieListCat">
-      {filteredMovies.map((movie) => (
-        <Movie movie={movie} />
-      ))}
+    <div>
+      <h1 className="titleCategories"> </h1>
+      <div className="MovieListCat">
+        {filteredMovies.map((movie) => (
+          <Movie movie={movie} />
+        ))}
+      </div>
     </div>
   );
 }

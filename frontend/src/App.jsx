@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { useEffect } from 'react';
 import axios from 'axios';
 import { Root } from './components/Root/Root';
 import Categories from './pages/Categories/Categories';
@@ -39,6 +38,7 @@ function useFetchMovies() {
 function App() {
   const movies = useFetchMovies();
   const [movieName, setMovieName] = useState('');
+  const [connected, setConnection] = useState(false);
 
   return (
     <Root movieName={movieName} setMovieName={setMovieName}>
@@ -52,8 +52,16 @@ function App() {
           path="search"
           element={<Search movieName={movieName} movies={movies} />}
         />
-        <Route path="users" element={<Users />} />
-        <Route path="/films/:id" element={<DetailsMovie movies={movies} />} />
+        <Route
+          path="users"
+          element={
+            <Users connected={connected} setConnection={setConnection} />
+          }
+        />
+        <Route
+          path="/films/:id"
+          element={<DetailsMovie movies={movies} connected={connected} />}
+        />
       </Routes>
     </Root>
   );

@@ -55,3 +55,8 @@
   padding: calc(15px + 1vw);
   padding-top: calc(5px + 1vw);
 }
+
+.User-connected {
+  margin-top: 60px;
+  color: #406490;
+}
