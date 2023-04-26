@@ -55,7 +55,7 @@ const Ratings = ({ connected, id_film, sent, isSent }) => {
     </form>
   ) : (
     <Link className="LinkCO" to="/users">
-      Connectez-vous pour ajouter un commentaire{' '}
+      Connectez-vous pour ajouter des films à votre liste ou un commentaire{' '}
     </Link>
   );
 };

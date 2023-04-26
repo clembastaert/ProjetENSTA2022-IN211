@@ -1,16 +1,28 @@
 import express from 'express';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+// import auth from '../middleware/auth';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
+import Comments from '../entities/comments.js';
 
 const router = express.Router();
 
-router.get('/me', function (req, res) {
-  debugger;
+// router.get('/me', auth, function (req, res) {
+//   debugger;
+//   appDataSource
+//     .getRepository(User)
+//     .findOne({ where: {} })
+//     .then(function (users) {
+//       res.json({ users: users });
+//     });
+// });
+
+router.get('/comm', function (req, res) {
   appDataSource
-    .getRepository(User)
-    .findOne({ where: {} })
+    .getRepository(Comments)
+    .find({ where: {} })
     .then(function (users) {
       res.json({ users: users });
     });

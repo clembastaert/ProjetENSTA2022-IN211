@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Comments from '../entities/comments.js';
+// import auth from './middleware/auth';
 
 const router = express.Router();
 

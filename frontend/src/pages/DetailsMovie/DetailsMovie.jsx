@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -11,6 +13,10 @@ function DetailsMovie({ movies, connected }) {
   const movie = movies.find((m) => m.id === parseInt(id));
   const [comments, setComments] = useState([]);
   const [sent, isSent] = useState(false);
+
+  // const handleClick = (con) => {
+  //   if (!con) {};
+  // };
 
   useEffect(() => {
     if (id !== undefined) {
@@ -47,6 +53,12 @@ function DetailsMovie({ movies, connected }) {
           <p>
             Note moyenne : {movie.vote_average}/10 ({movie.vote_count} votes)
           </p>
+          <div className="addmovie">
+            <i
+              className="fa-solid fa-square-plus" /*onClick={handleClick}*/
+            ></i>
+            <p> Ajouter ce film à votre liste </p>
+          </div>
         </div>
       </div>
       <Ratings connected={connected} id_film={id} sent={sent} isSent={isSent} />
