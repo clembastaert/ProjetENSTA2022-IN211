@@ -3,10 +3,9 @@ import typeorm from 'typeorm';
 const Comments = new typeorm.EntitySchema({
   name: 'Comments',
   columns: {
-    id: { primary: true, generated: 'uuid', type: String },
-    username: { type: String },
+    username: { type: String, primary: true },
     description: { type: String },
-    id_film: { type: String },
+    id_film: { type: String, primary: true },
     mark: { type: Number },
   },
 });

@@ -47,10 +47,14 @@ router.get('/tmdb', async (req, res) => {
         const newMovie = MoviesRepository.create({
           title: movie.title,
           release_date: movie.release_date,
+          description: movie.description,
+          genre: movie.genre,
+          poster_path: 'https://image.tmdb.org/t/p/w200' + movie.poster_path,
         });
         await MoviesRepository.insert(newMovie);
       }
     }
+
     res
       .status(200)
       .json({ message: 'Movies successfully added to the database' });
