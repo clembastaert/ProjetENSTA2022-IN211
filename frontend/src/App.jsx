@@ -15,19 +15,12 @@ function useFetchMovies() {
   useEffect(() => {
     const fetchMovies = async () => {
       const allMovies = [];
-      let page = 1;
-      while (page <= 10) {
-        // fetch 10 pages of popular movies
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/popular?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&language=fr&page=${page}`
-        );
-        allMovies.push(...response.data.results);
-        page++;
-      }
-      allMovies.sort(
-        (a, b) => new Date(b.release_date) - new Date(a.release_date)
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKDEND_URL}/movies/`
       );
-      setMovies(allMovies);
+
+      setMovies(response.data.movies);
+
     };
     fetchMovies();
   }, []);

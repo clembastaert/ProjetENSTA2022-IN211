@@ -6,7 +6,7 @@ import './Categories.css';
 function Categories({ movies }) {
   const { id } = useParams();
   const filteredMovies = movies.filter((movie) =>
-    movie.genre_ids.includes(parseInt(id))
+    movie.genre_ids.includes(id)
   );
 
   return (

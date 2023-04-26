@@ -10,7 +10,7 @@ import './DetailsMovie.css';
 
 function DetailsMovie({ movies, connected }) {
   const { id } = useParams();
-  const movie = movies.find((m) => m.id === parseInt(id));
+  const movie = movies.find((m) => m.id === id);
   const [comments, setComments] = useState([]);
   const [sent, isSent] = useState(false);
 
@@ -44,7 +44,7 @@ function DetailsMovie({ movies, connected }) {
       <h1>{movie.title}</h1>
       <div className="MoviePresentation">
         <img
-          src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+          src={`${movie.poster_path}`}
           alt={movie.title}
         />
         <div className="MovieText">

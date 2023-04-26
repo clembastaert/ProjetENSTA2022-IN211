@@ -15,9 +15,11 @@ function Users({ connected, setConnection }) {
       axios
         .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
         .then((response) => {
+
           setUsername(response.data.username);
         })
         .catch((error) => {
+
           console.error(error);
         });
     }

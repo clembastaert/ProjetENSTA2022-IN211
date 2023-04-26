@@ -7,7 +7,7 @@ function Movie({ movie }) {
     <div className="movie" key={movie.id}>
       <Link to={`/films/${movie.id}`}>
         <img
-          src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+          src={`${movie.poster_path}`}
           alt={movie.title}
         />
       </Link>

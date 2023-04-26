@@ -35,7 +35,7 @@ router.get('/tmdb', async (req, res) => {
       const MoviesRepository = appDataSource.getRepository(Movies);
       for (let i = 0; i < movies.length; i++) {
         const movie = movies[i];
-        if (!movie.title || !movie.release_date) {
+        if (!movie.title || !movie.release_date || !movie.overview) {
           continue;
         }
         const existingMovie = await MoviesRepository.findOne({
@@ -47,9 +47,12 @@ router.get('/tmdb', async (req, res) => {
         const newMovie = MoviesRepository.create({
           title: movie.title,
           release_date: movie.release_date,
-          description: movie.description,
-          genre: movie.genre,
+          description: movie.overview,
+          genre_ids: movie.genre_ids,
           poster_path: 'https://image.tmdb.org/t/p/w200' + movie.poster_path,
+          popularity: Math.round(movie.popularity * 100),
+          vote_average: movie.vote_average,
+          vote_count: movie.vote_count,
         });
         await MoviesRepository.insert(newMovie);
       }

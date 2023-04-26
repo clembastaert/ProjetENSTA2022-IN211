@@ -5,32 +5,32 @@ import axios from 'axios';
 import Movie from '../../components/Movie/Movie';
 
 function Home({ movies }) {
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState([
+    { "id": 28, "name": "Action" },
+    { "id": 12, "name": "Aventure" },
+    { "id": 16, "name": "Animation" },
+    { "id": 35, "name": "Comédie" },
+    { "id": 80, "name": "Crime" },
+    { "id": 99, "name": "Documentaire" },
+    { "id": 18, "name": "Drame" },
+    { "id": 10751, "name": "Familial" },
+    { "id": 14, "name": "Fantastique" },
+    { "id": 36, "name": "Histoire" },
+    { "id": 27, "name": "Horreur" },
+    { "id": 10402, "name": "Musique" },
+    { "id": 9648, "name": "Mystère" },
+    { "id": 10749, "name": "Romance" },
+    { "id": 878, "name": "Science-Fiction" },
+    { "id": 10770, "name": "Téléfilm" },
+    { "id": 53, "name": "Thriller" },
+    { "id": 10752, "name": "Guerre" },
+    { "id": 37, "name": "Western" }]);
+
   function filteredMovies(id) {
-    return movies.filter((movie) => movie.genre_ids.includes(parseInt(id)));
-    // return movies.filter((movie) => movie.genre_ids[0] === parseInt(id));
+    const moviesByGenre = movies.filter((movie) => parseInt(movie.genre_ids[0]) === parseInt(id));
+    return moviesByGenre.sort((a, b) => b.popularity - a.popularity).slice(0, 20);
   }
 
-  useEffect(() => {
-    async function fetchGenres() {
-      const response = await axios.get(
-        'https://api.themoviedb.org/3/genre/movie/list',
-        {
-          params: {
-            api_key: '15d2ea6d0dc1d476efbca3eba2b9bbfb',
-            language: 'fr-FR',
-          },
-        }
-      );
-      const sortedGenres = response.data.genres.sort(
-        (a, b) => b.popularity - a.popularity
-      );
-      const popularGenres = sortedGenres.slice(0, 15);
-      setGenres(popularGenres);
-    }
-
-    fetchGenres();
-  }, []);
 
   return (
     <div className="categories">
