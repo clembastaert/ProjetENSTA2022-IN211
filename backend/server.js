@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import usersRouter from './routes/users.js';
@@ -19,6 +21,7 @@ appDataSource
     app.use(logger('dev'));
     app.use(cors());
     app.use(express.json());
+    app.use(cookieParser());
     app.use(express.urlencoded({ extended: false }));
 
     // Register routes

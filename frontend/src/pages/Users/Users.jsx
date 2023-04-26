@@ -7,22 +7,20 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import DropdownMenu from '../../components/DropdownMenu/DropdownMenu';
 
-function Users({ connected, setConnection }) {
+function Users() {
   const [username, setUsername] = useState('');
+  const [connected, setConnection] = useState(false);
 
   useEffect(() => {
-    if (connected) {
-      axios
-        .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
-        .then((response) => {
-
-          setUsername(response.data.username);
-        })
-        .catch((error) => {
-
-          console.error(error);
-        });
-    }
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
+      .then((response) => {
+        setUsername(response.data);
+        setConnection(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [connected]);
 
   return connected ? (

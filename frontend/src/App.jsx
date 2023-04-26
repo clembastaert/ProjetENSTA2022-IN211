@@ -31,7 +31,6 @@ function useFetchMovies() {
 function App() {
   const movies = useFetchMovies();
   const [movieName, setMovieName] = useState('');
-  const [connected, setConnection] = useState(false);
 
   return (
     <Root movieName={movieName} setMovieName={setMovieName}>
@@ -45,16 +44,8 @@ function App() {
           path="search"
           element={<Search movieName={movieName} movies={movies} />}
         />
-        <Route
-          path="users"
-          element={
-            <Users connected={connected} setConnection={setConnection} />
-          }
-        />
-        <Route
-          path="/films/:id"
-          element={<DetailsMovie movies={movies} connected={connected} />}
-        />
+        <Route path="users" element={<Users />} />
+        <Route path="/films/:id" element={<DetailsMovie movies={movies} />} />
       </Routes>
     </Root>
   );
