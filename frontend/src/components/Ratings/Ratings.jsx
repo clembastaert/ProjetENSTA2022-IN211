@@ -4,10 +4,9 @@ import { Rating } from 'react-simple-star-rating';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Ratings = ({ connected, id_film, sent, isSent }) => {
+const Ratings = ({ connected, id_film, sent, isSent, username }) => {
   const [description, setDescription] = useState('');
   const [mark, setMark] = useState(0);
-  const username = 'toto';
 
   const handleRating = (selectedMark) => {
     setMark(selectedMark);

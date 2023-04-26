@@ -2,22 +2,16 @@ import express from 'express';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import auth from '../middleware/auth';
+import auth from '../middleware/auth.js';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import Comments from '../entities/comments.js';
 
 const router = express.Router();
 
-// router.get('/me', auth, function (req, res) {
-//   debugger;
-//   appDataSource
-//     .getRepository(User)
-//     .findOne({ where: {} })
-//     .then(function (users) {
-//       res.json({ users: users });
-//     });
-// });
+router.get('/me', auth, function (req, res) {
+  res.json(req.username);
+});
 
 router.get('/comm', function (req, res) {
   appDataSource
@@ -46,11 +40,16 @@ router.post('/login', function (req, res) {
               .status(401)
               .json({ message: 'Paire login/mot de passe incorrecte' });
           }
-          res.status(200).json({
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, 'RANDOM_TOKEN_SECRET', {
+          const token = jwt.sign(
+            { username: user.username },
+            'RANDOM_TOKEN_SECRET',
+            {
               expiresIn: '24h',
-            }),
+            }
+          );
+          req.cookies.token = token;
+          res.status(200).json({
+            message: 'Logged in successfully',
           });
         })
         .catch((error) => {
@@ -77,11 +76,16 @@ router.post('/signup', function (req, res) {
       userRepository
         .insert(newUser)
         .then(function (user) {
-          res.status(200).json({
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, 'RANDOM_TOKEN_SECRET', {
+          const token = jwt.sign(
+            { username: user.username },
+            'RANDOM_TOKEN_SECRET',
+            {
               expiresIn: '24h',
-            }),
+            }
+          );
+          res.cookie('token', token, { httpOnly: true, secure: true });
+          res.status(200).json({
+            message: 'Logged in successfully',
           });
         })
         .catch(function (error) {

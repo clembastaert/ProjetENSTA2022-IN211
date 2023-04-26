@@ -8,15 +8,26 @@ import Ratings from '../../components/Ratings/Ratings';
 import Comments from '../../components/Comments/Comments';
 import './DetailsMovie.css';
 
-function DetailsMovie({ movies, connected }) {
+function DetailsMovie({ movies }) {
   const { id } = useParams();
   const movie = movies.find((m) => m.id === parseInt(id));
   const [comments, setComments] = useState([]);
   const [sent, isSent] = useState(false);
 
-  // const handleClick = (con) => {
-  //   if (!con) {};
-  // };
+  const [username, setUsername] = useState('');
+  const [connected, setConnection] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
+      .then((response) => {
+        setUsername(response.data);
+        setConnection(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [connected]);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -61,7 +72,7 @@ function DetailsMovie({ movies, connected }) {
           </div>
         </div>
       </div>
-      <Ratings connected={connected} id_film={id} sent={sent} isSent={isSent} />
+      <Ratings id_film={id} sent={sent} isSent={isSent} username={username} />
       <Comments comments={comments} />
     </div>
   );

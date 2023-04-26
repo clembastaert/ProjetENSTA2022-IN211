@@ -1,15 +1,17 @@
 import jwt from 'jsonwebtoken';
 
-module.exports = (req, res, next) => {
+export default function auth(req, res, next) {
+  const token = req.cookies.token;
+  console.log(token);
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found in cookies' });
+  }
   try {
-    const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-    const userId = decodedToken.userId;
-    req.auth = {
-      userId: userId,
-    };
+    const username = decodedToken.username;
+    req.username = { username };
     next();
   } catch (error) {
     res.status(401).json({ error });
   }
-};
+}
