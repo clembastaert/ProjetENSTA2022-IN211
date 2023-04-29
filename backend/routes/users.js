@@ -47,8 +47,8 @@ router.post('/login', function (req, res) {
               expiresIn: '24h',
             }
           );
-          req.cookies.token = token;
           res.status(200).json({
+            token: token,
             message: 'Logged in successfully',
           });
         })
@@ -83,7 +83,7 @@ router.post('/signup', function (req, res) {
               expiresIn: '24h',
             }
           );
-          res.cookie('token', token, { httpOnly: true, secure: true });
+          window.localStorage.setItem('token', token);
           res.status(200).json({
             message: 'Logged in successfully',
           });

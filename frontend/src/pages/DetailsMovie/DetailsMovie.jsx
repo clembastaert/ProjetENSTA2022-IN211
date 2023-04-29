@@ -19,9 +19,13 @@ function DetailsMovie({ movies }) {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then((response) => {
-        setUsername(response.data);
+        setUsername(response.data.username);
         setConnection(true);
       })
       .catch((error) => {
@@ -54,25 +58,28 @@ function DetailsMovie({ movies }) {
     <div className="MoviePage">
       <h1>{movie.title}</h1>
       <div className="MoviePresentation">
-        <img
-          src={`${movie.poster_path}`}
-          alt={movie.title}
-        />
+        <img src={`${movie.poster_path}`} alt={movie.title} />
         <div className="MovieText">
           <p>{movie.overview}</p>
           <p>Date de sortie : {movie.release_date}</p>
           <p>
             Note moyenne : {movie.vote_average}/10 ({movie.vote_count} votes)
           </p>
-          <div className="addmovie">
-            <i
-              className="fa-solid fa-square-plus" /*onClick={handleClick}*/
-            ></i>
-            <p> Ajouter ce film à votre liste </p>
-          </div>
+          {connected ? (
+            <div className="addmovie">
+              <i className="fa-solid fa-square-plus"></i>
+              <p> Ajouter ce film à votre liste </p>
+            </div>
+          ) : null}
         </div>
       </div>
-      <Ratings id_film={id} sent={sent} isSent={isSent} username={username} />
+      <Ratings
+        connected={connected}
+        id_film={id}
+        sent={sent}
+        isSent={isSent}
+        username={username}
+      />
       <Comments comments={comments} />
     </div>
   );
