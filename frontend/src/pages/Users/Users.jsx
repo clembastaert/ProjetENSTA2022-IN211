@@ -8,7 +8,7 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import './Users.css';
 
-function Users() {
+function Users({ movies }) {
   const [username, setUsername] = useState('');
   const [connected, setConnection] = useState(false);
 
@@ -31,7 +31,7 @@ function Users() {
   return connected ? (
     <div className="User-connected">
       <h1> Bonjour @{username} </h1>
-      <DropdownMenu />
+      <DropdownMenu movies={movies} username={username} />
       <div
         className="disconnection"
         onClick={() => {

@@ -1,16 +1,27 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Logo from '../../assets/popcorn.png';
 
 function Navbar({ movieName, setMovieName }) {
+  const [movieNameDisplayed, setMovieNameDisplayed] = useState(movieName);
   const navigate = useNavigate();
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
+      setMovieName(event.target.value);
       navigate('/search');
+      setMovieNameDisplayed('');
     }
+  };
+  const handleSubmit = (event) => {
+    setMovieName(event.target.value);
+    navigate('/search');
+    setMovieNameDisplayed('');
   };
 
   return (
@@ -22,20 +33,21 @@ function Navbar({ movieName, setMovieName }) {
           </div>
         </Link>
         <form className="navbar--search">
-          <Link className="LinkNB" to="/search">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </Link>
+          <i
+            className="fa-solid fa-magnifying-glass"
+            onClick={handleSubmit}
+          ></i>
           <input
             type="text"
             placeholder="Rechercher un film"
-            value={movieName}
             className="navbar--search-input"
-            onChange={(e) => setMovieName(e.target.value)}
+            value={movieNameDisplayed}
             onKeyDown={handleKeyDown}
+            onChange={(e) => setMovieNameDisplayed(e.target.value)}
           />
           <i
             className="fa-solid fa-circle-xmark"
-            onClick={() => setMovieName('')}
+            onClick={() => setMovieNameDisplayed('')}
           ></i>
         </form>
       </div>

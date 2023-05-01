@@ -13,7 +13,7 @@ function DetailsMovie({ movies }) {
   const movie = movies.find((m) => m.id === id);
   const [comments, setComments] = useState([]);
   const [sent, isSent] = useState(false);
-
+  const [movieLiked, setmovieLiked] = useState(false);
   const [username, setUsername] = useState('');
   const [connected, setConnection] = useState(false);
 
@@ -34,17 +34,59 @@ function DetailsMovie({ movies }) {
   }, [connected]);
 
   useEffect(() => {
-    if (id !== undefined) {
-      axios
-        .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/${id}`)
-        .then((response) => {
-          setComments(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [sent]);
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/${id}`)
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id, sent]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`)
+      .then(() => {
+        setmovieLiked(true);
+      })
+      .catch(() => {
+        setmovieLiked(false);
+      });
+  }, [id, username]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/${id}/${username}`)
+      .then(() => {
+        isSent(true);
+      })
+      .catch(() => {
+        isSent(false);
+      });
+  }, [id, username]);
+
+  function handleClick() {
+    movieLiked
+      ? axios
+          .delete(
+            `${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`
+          )
+          .then(() => {
+            setmovieLiked(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      : axios
+          .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`)
+          .then(() => {
+            setmovieLiked(true);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+  }
 
   if (!movie) {
     return (
@@ -65,12 +107,24 @@ function DetailsMovie({ movies }) {
           <p>
             Note moyenne : {movie.vote_average}/10 ({movie.vote_count} votes)
           </p>
-          {connected ? (
-            <div className="addmovie">
-              <i className="fa-solid fa-square-plus"></i>
-              <p> Ajouter ce film à votre liste </p>
-            </div>
-          ) : null}
+          {connected &&
+            (movieLiked ? (
+              <div className="addmovie">
+                <i
+                  className="fa-solid fa-square-minus"
+                  onClick={handleClick}
+                ></i>
+                <p> Supprimer ce film de votre liste </p>
+              </div>
+            ) : (
+              <div className="addmovie">
+                <i
+                  className="fa-solid fa-square-plus"
+                  onClick={handleClick}
+                ></i>
+                <p> Ajouter ce film à votre liste </p>
+              </div>
+            ))}
         </div>
       </div>
       <Ratings
@@ -80,7 +134,7 @@ function DetailsMovie({ movies }) {
         isSent={isSent}
         username={username}
       />
-      <Comments comments={comments} />
+      {comments.length > 0 && <Comments comments={comments} />}
     </div>
   );
 }

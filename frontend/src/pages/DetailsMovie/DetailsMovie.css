@@ -47,7 +47,7 @@ img {
 }
 
 .fa-solid {
-    align-self: flex-end;
+    align-self: center;
     transform: scale(1.1);
 }
 

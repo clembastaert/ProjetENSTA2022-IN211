@@ -14,3 +14,55 @@
 .list i {
     align-self: center;
 }
+
+.DeleteUser {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    font-weight: 600;
+    font-size: large;
+}
+
+.ratingandicons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.Comment2 img {
+    height: 230px;
+    width: auto;
+}
+
+.Comment2 {
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    margin-top: 30px;
+    width: 430px;
+    margin-bottom: 30px;
+}
+
+.opinion p {
+    max-height: 180px;
+    overflow-y: scroll;
+}
+
+.opinion {
+    margin-left: 10px;
+}
+
+.CommentList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

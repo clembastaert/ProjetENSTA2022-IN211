@@ -1,7 +1,9 @@
 import express from 'express';
 import axios from 'axios';
+import { In } from 'typeorm';
 import { appDataSource } from '../datasource.js';
 import Movies from '../entities/movies.js';
+import Likes from '../entities/likes.js';
 
 const router = express.Router();
 
@@ -74,6 +76,8 @@ router.post('/new', function (req, res) {
   const newMovie = MoviesRepository.create({
     title: req.body.title,
     release_date: req.body.release_date,
+    description: req.body.description,
+    poster_path: req.body.poster_path,
   });
   MoviesRepository.insert(newMovie)
     .then(function (newDocument) {
@@ -88,6 +92,83 @@ router.post('/new', function (req, res) {
       } else {
         res.status(500).json({ message: 'Error while creating the Movie' });
       }
+    });
+});
+
+router.get('/:username', async (req, res) => {
+  const likesRepository = appDataSource.getRepository(Likes);
+  const moviesRepository = appDataSource.getRepository(Movies);
+  const { username } = req.params;
+
+  try {
+    const likesByUser = await likesRepository.find({ where: { username } });
+    const idFilmsLikedByUser = likesByUser.map((like) => like.id_film);
+    const moviesLikedByUser = await moviesRepository.find({
+      where: { id: In(idFilmsLikedByUser) },
+    });
+    res.status(200).json(moviesLikedByUser);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Erreur lors de la récupération des films' });
+  }
+});
+
+router.get('/:id_film/:username', function (req, res) {
+  appDataSource
+    .getRepository(Likes)
+    .findOne({
+      where: { id_film: req.params.id_film, username: req.params.username },
+    })
+    .then(function (like) {
+      if (like !== null) {
+        res.status(204).json({ message: 'Liked' });
+      } else {
+        res.status(404).json({ message: 'Not Liked' });
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    });
+});
+
+router.post('/:id_film/:username', async (req, res) => {
+  const likesRepository = appDataSource.getRepository(Likes);
+  const { id_film, username } = req.params;
+  const newLike = likesRepository.create({
+    id_film: id_film,
+    username: username,
+    like: true,
+  });
+
+  likesRepository
+    .insert(newLike)
+    .then(function (newDocument) {
+      res.status(201).json(newDocument);
+    })
+    .catch(function (error) {
+      console.error(error);
+      if (error.code === '23505') {
+        res.status(400).json({
+          message: `Like by "${newLike.username}" already done`,
+        });
+      } else {
+        res.status(500).json({ message: 'Error while adding the like' });
+      }
+    });
+});
+
+router.delete('/:id_film/:username', function (req, res) {
+  appDataSource
+    .getRepository(Likes)
+    .delete({ id_film: req.params.id_film, username: req.params.username })
+    .then(function () {
+      res.status(204).json({ message: 'Like successfully deleted' });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while deleting the like' });
     });
 });
 

@@ -18,9 +18,7 @@ function useFetchMovies() {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKDEND_URL}/movies/`
       );
-
       setMovies(response.data.movies);
-
     };
     fetchMovies();
   }, []);
@@ -44,7 +42,7 @@ function App() {
           path="search"
           element={<Search movieName={movieName} movies={movies} />}
         />
-        <Route path="users" element={<Users />} />
+        <Route path="users" element={<Users movies={movies} />} />
         <Route path="/films/:id" element={<DetailsMovie movies={movies} />} />
       </Routes>
     </Root>

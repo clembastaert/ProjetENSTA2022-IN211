@@ -35,7 +35,9 @@ router.get('/:id_film', async (req, res) => {
   const { id_film } = req.params;
 
   try {
-    const comments = await commentsRepository.find({ where: { id_film } });
+    const comments = await commentsRepository.find({
+      where: { id_film },
+    });
     res.status(200).json(comments);
   } catch (error) {
     console.error(error);
@@ -43,6 +45,81 @@ router.get('/:id_film', async (req, res) => {
       .status(500)
       .json({ message: 'Erreur lors de la récupération des commentaires' });
   }
+});
+
+router.get('/u/u/:username', async (req, res) => {
+  const commentsRepository = appDataSource.getRepository(Comments);
+  const { username } = req.params;
+
+  try {
+    const comments = await commentsRepository.find({
+      where: { username },
+    });
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Erreur lors de la récupération des commentaires' });
+  }
+});
+
+router.get('/:id_film/:username', function (req, res) {
+  appDataSource
+    .getRepository(Comments)
+    .findOne({
+      where: { id_film: req.params.id_film, username: req.params.username },
+    })
+    .then(function (elt) {
+      if (elt !== null) {
+        res.status(204).json({ message: 'Commented' });
+      } else {
+        res.status(404).json({ message: 'Not commented' });
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    });
+});
+
+router.put('/:id_film/:username', function (req, res) {
+  const { id_film, username } = req.params;
+  const { description, mark } = req.body;
+
+  appDataSource
+    .getRepository(Comments)
+    .findOne({
+      where: { id_film, username },
+    })
+    .then((comment) => {
+      if (comment) {
+        comment.description = description || comment.description;
+        comment.mark = mark || comment.mark;
+        appDataSource.getRepository(Comments).save(comment);
+      } else {
+        res.status(404).json({ message: 'Comment not found' });
+      }
+    })
+    .then(() => {
+      res.status(200).json({ message: 'Comment successfully updated' });
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    });
+});
+
+router.delete('/:id_film/:username', function (req, res) {
+  appDataSource
+    .getRepository(Comments)
+    .delete({ id_film: req.params.id_film, username: req.params.username })
+    .then(function () {
+      res.status(204).json({ message: 'Comment successfully deleted' });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Error while deleting the comment' });
+    });
 });
 
 export default router;
