@@ -50,7 +50,7 @@ router.post('/login', function (req, res) {
           );
           res.status(200).json({
             token: token,
-            message: 'Logged in successfully',
+            message: 'Connexion réussie',
           });
         })
         .catch((error) => {
@@ -70,7 +70,7 @@ router.post('/signup', function (req, res) {
     .then((userWithEmail) => {
       if (userWithEmail) {
         return res.status(400).json({
-          message: `User with email "${req.body.email}" already exists`,
+          message: `Adresse "${req.body.email}" déjà utilisée`,
         });
       }
       userRepository
@@ -78,7 +78,7 @@ router.post('/signup', function (req, res) {
         .then((userWithUsername) => {
           if (userWithUsername) {
             return res.status(400).json({
-              message: `User with username "${req.body.username}" already exists`,
+              message: `Nom d'utilisateur "${req.body.username}" déjà utilisé`,
             });
           }
           bcrypt
@@ -103,12 +103,12 @@ router.post('/signup', function (req, res) {
                   );
                   res.status(200).json({
                     token: token,
-                    message: 'Logged in successfully',
+                    message: 'Connexion réussie',
                   });
                 })
                 .catch(function (error) {
                   console.error(error);
-                  res.status(500).json({ message: 'Error while creating the user' });
+                  res.status(500).json({ message: 'Erreur de création de l\'utilisateur' });
                 });
             })
             .catch((error) => res.status(500).json({ error }));
@@ -121,7 +121,7 @@ router.post('/signup', function (req, res) {
           );
           res.status(200).json({
             token: token,
-            message: 'Logged in successfully',
+            message: 'Connexion réussie',
           });
         })
         .catch((error) => {

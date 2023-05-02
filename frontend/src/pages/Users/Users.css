@@ -78,3 +78,9 @@
   margin-left: 10px;
   font-weight: 600;
 }
+
+
+.errorMessage {
+  color: red;
+  word-wrap: break-word;
+}

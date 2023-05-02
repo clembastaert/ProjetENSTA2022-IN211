@@ -9,6 +9,7 @@ import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
 import DetailsMovie from './pages/DetailsMovie/DetailsMovie';
 
+
 function useFetchMovies() {
   const [movies, setMovies] = useState([]);
 

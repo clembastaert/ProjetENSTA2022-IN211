@@ -7,6 +7,7 @@ import Likes from '../entities/likes.js';
 import auth from '../middleware/auth.js';
 //import multer from '../middleware/multer-config.js';
 
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -24,7 +25,7 @@ router.get('/', (req, res) => {
 
 router.get('/tmdb', async (req, res) => {
   try {
-    for (let j = 1; j < 100; j++) {
+    for (let j = 1; j < 1000; j++) {
       const response = await axios.get(
         'https://api.themoviedb.org/3/trending/all/day?',
         {

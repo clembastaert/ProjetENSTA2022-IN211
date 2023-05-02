@@ -8,6 +8,7 @@ function SignUpForm({ setConnection }) {
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -22,6 +23,7 @@ function SignUpForm({ setConnection }) {
       })
       .catch((error) => {
         console.error(error);
+        setErrorMessage(error.response.data.message);
       });
   }
 
@@ -95,6 +97,7 @@ function SignUpForm({ setConnection }) {
           Créer un compte
         </button>
       </div>
+      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
     </form>
   );
 }
