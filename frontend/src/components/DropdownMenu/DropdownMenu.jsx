@@ -26,9 +26,6 @@ function DropdownMenu({ username, movies }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [username]);
-
-  useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/u/u/${username}`)
       .then((response) => {

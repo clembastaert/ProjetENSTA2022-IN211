@@ -11,24 +11,38 @@ import './Users.css';
 function Users({ movies }) {
   const [username, setUsername] = useState('');
   const [connected, setConnection] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      .then((response) => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKDEND_URL}/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
         setUsername(response.data.username);
         setConnection(true);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
-  }, [connected]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return connected ? (
+    if (localStorage.getItem('token')) {
+      checkUser();
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  return loading ? (
+    <div> </div>
+  ) : connected ? (
     <div className="User-connected">
       <h1> Bonjour @{username} </h1>
       <DropdownMenu movies={movies} username={username} />
