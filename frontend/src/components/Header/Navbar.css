@@ -56,14 +56,14 @@
   flex: row;
   padding: 5px 10px;
   background-color: #B6D8F2;
-  justify-content: space-between;
   border-radius: 10px;
-  width: calc(120px + 15vw);
+  width: calc(100px + 15vw);
 }
 
 .navbar--search-input {
   background-color: #B6D8F2;
   width: calc(75px + 15vw);
+  margin-left: 4px;
   border: none;
   font-size: 1em;
   color: #5784BA;

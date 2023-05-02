@@ -19,7 +19,11 @@ function DropdownMenu({ username, movies }) {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${username}`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${username}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then((response) => {
         setMoviesLiked(response.data);
       })
@@ -27,7 +31,11 @@ function DropdownMenu({ username, movies }) {
         console.error(error);
       });
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/u/u/${username}`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/u/u/${username}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then((response) => {
         setComments(response.data);
       })
@@ -38,7 +46,11 @@ function DropdownMenu({ username, movies }) {
 
   function deleteUser() {
     axios
-      .delete(`${import.meta.env.VITE_BACKDEND_URL}/users/${username}`)
+      .delete(`${import.meta.env.VITE_BACKDEND_URL}/users/${username}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then(() => {
         console.log(`User ${username} successfully deleted`);
       })
@@ -50,7 +62,12 @@ function DropdownMenu({ username, movies }) {
   function deleteComment(movieid) {
     axios
       .delete(
-        `${import.meta.env.VITE_BACKDEND_URL}/comments/${movieid}/${username}`
+        `${import.meta.env.VITE_BACKDEND_URL}/comments/${movieid}/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
       )
       .then(() => {
         console.log(`Comment successfully deleted`);

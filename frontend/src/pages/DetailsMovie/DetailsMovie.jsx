@@ -47,49 +47,79 @@ function DetailsMovie({ movies }) {
   useEffect(() => {
     if (connected) {
       axios
-        .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`)
+        .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
         .then(() => {
           setMovieLiked(true);
         })
         .catch(() => {
           setMovieLiked(false);
-        })
-        .finally(() => {
-          setLoading(false);
         });
       axios
-        .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/${id}/${username}`)
+        .get(
+          `${import.meta.env.VITE_BACKDEND_URL}/comments/${id}/${username}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
         .then(() => {
           setSent(true);
         })
         .catch(() => {
           setSent(false);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       setLoading(false);
     }
   }, [id, username, connected]);
 
-  function handleClick() {
-    if (movieLiked) {
-      axios
-        .delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`)
-        .then(() => {
-          setMovieLiked(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      axios
-        .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`)
-        .then(() => {
-          setMovieLiked(true);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+  function handleDelete() {
+    axios
+      .delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then(() => {
+        setMovieLiked(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function handleAdd() {
+    axios
+      .post(
+        `${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      )
+      .then(() => {
+        setMovieLiked(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function formatDate(date) {
+    const releaseDate = new Date(date);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
+    return releaseDate.toLocaleDateString('fr-FR', options);
   }
 
   return movie ? (
@@ -98,27 +128,21 @@ function DetailsMovie({ movies }) {
       <div className="MoviePresentation">
         <img src={`${movie.poster_path}`} alt={movie.title} />
         <div className="MovieText">
-          <p>{movie.overview}</p>
-          <p>Date de sortie : {movie.release_date}</p>
-          <p>
-            Note moyenne : {movie.vote_average}/10 ({movie.vote_count} votes)
-          </p>
+          <p>{movie.description}</p>
+          <p>Date de sortie : {formatDate(movie.release_date)}</p>
           {!loading &&
             connected &&
             (movieLiked ? (
               <div className="addmovie">
                 <i
                   className="fa-solid fa-square-minus"
-                  onClick={handleClick}
+                  onClick={handleDelete}
                 ></i>
                 <p> Supprimer ce film de votre liste </p>
               </div>
             ) : (
               <div className="addmovie">
-                <i
-                  className="fa-solid fa-square-plus"
-                  onClick={handleClick}
-                ></i>
+                <i className="fa-solid fa-square-plus" onClick={handleAdd}></i>
                 <p> Ajouter ce film à votre liste </p>
               </div>
             ))}

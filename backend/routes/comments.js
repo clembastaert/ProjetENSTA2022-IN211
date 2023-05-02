@@ -1,15 +1,15 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Comments from '../entities/comments.js';
-// import auth from './middleware/auth';
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/new', function (req, res) {
+router.post('/new', auth, function (req, res) {
   const commentsRepository = appDataSource.getRepository(Comments);
   const newComment = commentsRepository.create({
     id_film: req.body.id_film,
-    username: req.body.username,
+    username: req.username,
     mark: req.body.mark,
     description: req.body.description,
   });
@@ -47,9 +47,9 @@ router.get('/:id_film', async (req, res) => {
   }
 });
 
-router.get('/u/u/:username', async (req, res) => {
+router.get('/u/u/:username', auth, async (req, res) => {
   const commentsRepository = appDataSource.getRepository(Comments);
-  const { username } = req.params;
+  const { username } = req.username;
 
   try {
     const comments = await commentsRepository.find({
@@ -64,7 +64,7 @@ router.get('/u/u/:username', async (req, res) => {
   }
 });
 
-router.get('/:id_film/:username', function (req, res) {
+router.get('/:id_film/:username', auth, function (req, res) {
   appDataSource
     .getRepository(Comments)
     .findOne({
@@ -83,8 +83,9 @@ router.get('/:id_film/:username', function (req, res) {
     });
 });
 
-router.put('/:id_film/:username', function (req, res) {
-  const { id_film, username } = req.params;
+router.put('/:id_film/:username', auth, function (req, res) {
+  const id_film = req.params.id_film;
+  const username = req.username;
   const { description, mark } = req.body;
 
   appDataSource
@@ -110,10 +111,10 @@ router.put('/:id_film/:username', function (req, res) {
     });
 });
 
-router.delete('/:id_film/:username', function (req, res) {
+router.delete('/:id_film/:username', auth, function (req, res) {
   appDataSource
     .getRepository(Comments)
-    .delete({ id_film: req.params.id_film, username: req.params.username })
+    .delete({ id_film: req.params.id_film, username: req.username })
     .then(function () {
       res.status(204).json({ message: 'Comment successfully deleted' });
     })

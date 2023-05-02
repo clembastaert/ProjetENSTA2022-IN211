@@ -4,6 +4,8 @@ import { In } from 'typeorm';
 import { appDataSource } from '../datasource.js';
 import Movies from '../entities/movies.js';
 import Likes from '../entities/likes.js';
+import auth from '../middleware/auth.js';
+//import multer from '../middleware/multer-config.js';
 
 const router = express.Router();
 
@@ -71,13 +73,17 @@ router.get('/tmdb', async (req, res) => {
   }
 });
 
-router.post('/new', function (req, res) {
+// il faudrait ajouter multer ici
+router.post('/new', auth, function (req, res) {
   const MoviesRepository = appDataSource.getRepository(Movies);
   const newMovie = MoviesRepository.create({
     title: req.body.title,
     release_date: req.body.release_date,
+    categories: req.body.categories,
     description: req.body.description,
-    poster_path: req.body.poster_path,
+    poster_path: `${req.protocol}://${req.get('host')}/images/${
+      req.file.filename
+    }`,
   });
   MoviesRepository.insert(newMovie)
     .then(function (newDocument) {
@@ -95,10 +101,10 @@ router.post('/new', function (req, res) {
     });
 });
 
-router.get('/:username', async (req, res) => {
+router.get('/:username', auth, async (req, res) => {
   const likesRepository = appDataSource.getRepository(Likes);
   const moviesRepository = appDataSource.getRepository(Movies);
-  const { username } = req.params;
+  const { username } = req.username;
 
   try {
     const likesByUser = await likesRepository.find({ where: { username } });
@@ -115,7 +121,7 @@ router.get('/:username', async (req, res) => {
   }
 });
 
-router.get('/:id_film/:username', function (req, res) {
+router.get('/:id_film/:username', auth, function (req, res) {
   appDataSource
     .getRepository(Likes)
     .findOne({
@@ -134,7 +140,7 @@ router.get('/:id_film/:username', function (req, res) {
     });
 });
 
-router.post('/:id_film/:username', async (req, res) => {
+router.post('/:id_film/:username', auth, async (req, res) => {
   const likesRepository = appDataSource.getRepository(Likes);
   const { id_film, username } = req.params;
   const newLike = likesRepository.create({
@@ -160,7 +166,7 @@ router.post('/:id_film/:username', async (req, res) => {
     });
 });
 
-router.delete('/:id_film/:username', function (req, res) {
+router.delete('/:id_film/:username', auth, function (req, res) {
   appDataSource
     .getRepository(Likes)
     .delete({ id_film: req.params.id_film, username: req.params.username })

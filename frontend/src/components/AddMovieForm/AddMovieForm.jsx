@@ -9,6 +9,55 @@ function AddMovieForm() {
   const [posterPath, setPosterPath] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  function SelectInput() {
+    const options = [
+      'Action',
+      'Aventure',
+      'Animation',
+      'Comédie',
+      'Crime',
+      'Documentaire',
+      'Drame',
+      'Familial',
+      'Fantastique',
+      'Histoire',
+      'Horreur',
+      'Musique',
+      'Mystère',
+      'Romance',
+      'Science-Fiction',
+      'Téléfilm',
+      'Thriller',
+      'Guerre',
+      'Western',
+    ];
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (event) => {
+      setSelectedOption(event.target.value);
+    };
+
+    return (
+      <div className="formPlaceCategories">
+        <label className="formEntryCategory" htmlFor="options">
+          Catégorie:{' '}
+        </label>
+        <select
+          id="options"
+          value={selectedOption}
+          onChange={handleOptionChange}
+        >
+          <option value=""> -- Choisir une catégorie -- </option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
   function handleTitleChange(event) {
     setTitle(event.target.value);
   }
@@ -80,20 +129,25 @@ function AddMovieForm() {
             className="formEntryDescription"
           />
         </label>
-        <div className="AfficheandSend">
+        <div className="AfficheandCategorie">
           <label className="formPlaceAffiche">
             <p> Affiche: </p>
-            <input
-              type="text"
-              value={posterPath}
-              onChange={handlePosterPathChange}
-              className="formEntry2"
-            />
+            <div className="uploadFile">
+              <input
+                type="file"
+                id="file"
+                accept=".jpg,.png"
+                value={posterPath}
+                onChange={handlePosterPathChange}
+                className="formEntryAffiche"
+              />
+            </div>
           </label>
-          <button type="submit" className="formSend">
-            Ajouter
-          </button>
+          <SelectInput />
         </div>
+        <button type="submit" className="formSend">
+          Ajouter
+        </button>
       </form>
     </div>
   );

@@ -103,14 +103,14 @@ router.post('/signup', function (req, res) {
     .catch((error) => res.status(500).json({ error }));
 });
 
-router.delete('/:username', function (req, res) {
+router.delete('/:username', auth, function (req, res) {
   appDataSource
     .getRepository(User)
-    .delete({ username: req.params.username })
+    .delete({ username: req.username })
     .getRepository(Likes)
-    .delete({ username: req.params.username })
+    .delete({ username: req.username })
     .getRepository(Comments)
-    .delete({ username: req.params.username })
+    .delete({ username: req.username })
     .then(function () {
       res.status(204).json({ message: 'User successfully deleted' });
     })

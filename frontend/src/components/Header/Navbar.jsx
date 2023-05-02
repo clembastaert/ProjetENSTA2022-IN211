@@ -33,10 +33,7 @@ function Navbar({ movieName, setMovieName }) {
           </div>
         </Link>
         <form className="navbar--search">
-          <i
-            className="fa-solid fa-magnifying-glass"
-            onClick={handleSubmit}
-          ></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
             placeholder="Rechercher un film"
@@ -45,10 +42,6 @@ function Navbar({ movieName, setMovieName }) {
             onKeyDown={handleKeyDown}
             onChange={(e) => setMovieNameDisplayed(e.target.value)}
           />
-          <i
-            className="fa-solid fa-circle-xmark"
-            onClick={() => setMovieNameDisplayed('')}
-          ></i>
         </form>
       </div>
       <div className="navbar--link-connection">
