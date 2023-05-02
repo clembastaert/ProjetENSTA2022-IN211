@@ -26,6 +26,7 @@ function Home({ movies }) {
     { id: 37, name: 'Western' },
   ];
 
+
   function filteredMovies(id) {
     const moviesByGenre = movies.filter(
       (movie) => parseInt(movie.genre_ids[0]) === parseInt(id)
@@ -59,3 +60,6 @@ function Home({ movies }) {
 }
 
 export default Home;
+
+
+

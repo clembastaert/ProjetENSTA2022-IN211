@@ -5,7 +5,7 @@
   justify-content: center;
   gap: 10vw;
   align-items: flex-start;
-  color: #5784BA;
+  color: #dadada;
 }
 
 .Users-container> :not(:last-child) {
@@ -19,11 +19,10 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
+  color: #dadada;
+  background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #406490;
-  border-radius: 0.25rem;
+  border: 2px solid #a05523;
 }
 
 .formPlace {
@@ -34,12 +33,15 @@
 }
 
 .formButton {
-  color: #406490;
+  color: #dadada;
   font-size: calc(1rem + 0.2vw);
-  background-color: #B6D8F2;
-  border: 2px solid #406490;
-  border-radius: 0.25rem;
+  background-color: #3f3f3f;
+  border: 2px solid #3f3f3f;
   margin-top: 20px;
+}
+
+.formButton:hover {
+  transform: scale(1.03);
 }
 
 .formTitle {
@@ -49,16 +51,16 @@
 }
 
 .connectionForm {
-  border-radius: 30px;
-  border: 3px solid #fc9149;
-  background-color: #fc91498d;
+  border-radius: 10px;
+  border: 3px solid #1a1a1a;
+  background-color: #1a1a1a;
   padding: calc(15px + 1vw);
   padding-top: calc(5px + 1vw);
 }
 
 .User-connected {
   margin-top: 60px;
-  color: #406490;
+  color: #dadada;
   display: flex;
   flex-direction: column;
 }

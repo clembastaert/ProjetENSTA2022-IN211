@@ -15,7 +15,7 @@ function SignUpForm({ setConnection }) {
     const formData = { username, firstname, lastname, email, password };
 
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formData)
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/signup`, formData)
       .then((response) => {
         window.localStorage.setItem('token', response.data.token);
         setConnection(true);

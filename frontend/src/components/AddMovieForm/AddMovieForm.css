@@ -39,15 +39,15 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
+  color: #dadada;
+  background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #406490;
+  border: 2px solid #a05523;
   border-radius: 0.25rem;
 }
 
 #file-upload-button {
-  border: 5px solid #406490;
+  border: 5px solid #a05523;
 }
 
 .formEntryDescription {
@@ -57,10 +57,10 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
+  color: #dadada;
+  background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #406490;
+  border: 2px solid #a05523;
   border-radius: 0.25rem;
 }
 
@@ -88,12 +88,12 @@
 }
 
 .formSend {
-  color: #406490;
+  color: #a05523;
   width: 100px;
   font-size: calc(1rem + 0.2vw);
   font-weight: 550;
-  background-color: #B6D8F2;
-  border: 2px solid #406490;
+  background-color: #1a1a1a;
+  border: 2px solid #a05523;
   border-radius: 0.25rem;
   height: 30px;
   align-self: center;
@@ -110,12 +110,12 @@
 }
 
 .formPlaceCategories select {
-  border: 2px solid #406490;
+  border: 2px solid #a05523;
   border-radius: 5px;
   padding: 5px;
-  background-color: white;
+  background-color: #131313;
   font-size: 0.9em;
-  color: #406490;
+  color: #a05523;
 }
 
 .AfficheandCategorie {

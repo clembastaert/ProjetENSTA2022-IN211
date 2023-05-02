@@ -62,46 +62,79 @@ router.post('/login', function (req, res) {
     });
 });
 
+
 router.post('/signup', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
-  bcrypt
-    .hash(req.body.password, 10)
-    .then((hash) => {
-      const newUser = userRepository.create({
-        email: req.body.email,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        username: req.body.username,
-        password: hash,
-      });
+  userRepository
+    .findOne({ where: { email: req.body.email } })
+    .then((userWithEmail) => {
+      if (userWithEmail) {
+        return res.status(400).json({
+          message: `User with email "${req.body.email}" already exists`,
+        });
+      }
       userRepository
-        .insert(newUser)
-        .then(function (user) {
+        .findOne({ where: { username: req.body.username } })
+        .then((userWithUsername) => {
+          if (userWithUsername) {
+            return res.status(400).json({
+              message: `User with username "${req.body.username}" already exists`,
+            });
+          }
+          bcrypt
+            .hash(req.body.password, 10)
+            .then((hash) => {
+              const newUser = userRepository.create({
+                email: req.body.email,
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                username: req.body.username,
+                password: hash,
+              });
+              userRepository
+                .insert(newUser)
+                .then(function (user) {
+                  const token = jwt.sign(
+                    { username: user.username },
+                    'RANDOM_TOKEN_SECRET',
+                    {
+                      expiresIn: '24h',
+                    }
+                  );
+                  res.status(200).json({
+                    token: token,
+                    message: 'Logged in successfully',
+                  });
+                })
+                .catch(function (error) {
+                  console.error(error);
+                  res.status(500).json({ message: 'Error while creating the user' });
+                });
+            })
+            .catch((error) => res.status(500).json({ error }));
           const token = jwt.sign(
-            { username: user.username },
+            { username: req.body.username },
             'RANDOM_TOKEN_SECRET',
             {
               expiresIn: '24h',
             }
           );
-          res.cookie('token', token, { httpOnly: true, secure: true });
           res.status(200).json({
+            token: token,
             message: 'Logged in successfully',
           });
         })
-        .catch(function (error) {
-          console.error(error);
-          if (error.code === '23505') {
-            res.status(400).json({
-              message: `User with email "${newUser.email}" already exists`,
-            });
-          } else {
-            res.status(500).json({ message: 'Error while creating the user' });
-          }
+        .catch((error) => {
+          res.status(500).json({ error });
         });
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 });
+
+
+
 
 router.delete('/:username', auth, function (req, res) {
   appDataSource

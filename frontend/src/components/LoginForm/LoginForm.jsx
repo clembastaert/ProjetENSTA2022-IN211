@@ -12,7 +12,7 @@ function LoginForm({ setConnection }) {
     const formData = { email, password };
 
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formData, { withCredentials: true })
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formData)
       .then((response) => {
         window.localStorage.setItem('token', response.data.token);
         setConnection(true);

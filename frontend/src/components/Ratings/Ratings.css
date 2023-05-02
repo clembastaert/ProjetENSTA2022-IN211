@@ -6,9 +6,9 @@
     margin-right: calc(25vw - 100px);
     border-radius: 15px;
     padding: 10px;
-    border: 3px solid #406490;
+    border: 3px solid #a05523;
     /*background-color: #fc91498d;*/
-    background-color: #B6D8F2;
+    background-color: #1a1a1a;
 }
 
 .titleComments {
@@ -26,18 +26,18 @@
     height: 3rem;
     font-size: 1rem;
     line-height: 1.5;
-    color: #406490;
-    background-color: #fff;
+    color: #dadada;
+    background-color: #131313;
     background-clip: padding-box;
-    border: 2px solid #406490;
+    border: 2px solid #a05523;
     border-radius: 0.25rem;
 }
 
 .sendRating {
-    color: #B6D8F2;
+    color: #1a1a1a;
     font-size: 1.1em;
-    background-color: #406490;
-    border: 1px solid #406490;
+    background-color: #a05523;
+    border: 1px solid #a05523;
     align-self: flex-end;
     width: 100px;
     border-radius: 0.25rem;
@@ -52,7 +52,7 @@
 .LinkCO {
     align-self: center;
     margin-top: 30px;
-    color: #406490;
+    color: #a05523;
 }
 
 .LinkCO:hover {

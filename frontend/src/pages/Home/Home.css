@@ -9,6 +9,18 @@
     padding: 10px;
 }
 
+.MovieList::-webkit-scrollbar {
+    height: 10px;
+    background-color: #3f3f3f;
+    border-radius: 5px;
+}
+
+.MovieList::-webkit-scrollbar-thumb {
+    background-color: #fc9149;
+    border-radius: 5px;
+    cursor: grab;
+}
+
 .categories {
     margin-top: 55px;
 }
@@ -18,9 +30,11 @@
 }
 
 .LinkCM {
-    color: #5784BA;
+    color: #dadada;
     font-size: 1.3em;
     margin-left: 10px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .LinkCM:hover {

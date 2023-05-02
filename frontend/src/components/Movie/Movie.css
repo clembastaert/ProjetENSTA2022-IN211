@@ -3,7 +3,7 @@
     font-size: 1em;
     width: 200px;
     margin-top: 10px;
-    color: #5784BA;
+    color: #dadada;
     transition: transform 0.2s ease-out;
 }
 
@@ -13,4 +13,6 @@ img {
 
 .movie:hover {
     transform: scale(1.07);
+    z-index: 1;
+    color: #fc9149;
 }
