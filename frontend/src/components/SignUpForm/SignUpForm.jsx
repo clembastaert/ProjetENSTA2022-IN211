@@ -21,7 +21,7 @@ function SignUpForm({ setConnection }) {
     };
 
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/signup`, formData)
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/signup`, formData, { withCredentials: true, credentials: 'include' })
       .then((response) => {
         setConnection(true);
       })

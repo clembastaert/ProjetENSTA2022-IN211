@@ -13,7 +13,7 @@ function Users() {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/users/me`, { withCredentials: true })
       .then((response) => {
         setUsername(response.data);
         setConnection(true);
