@@ -1,0 +1,135 @@
+.formPlaceTitle {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  row-gap: 5px;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.formPlaceDate {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  row-gap: 5px;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.TitleandDate {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: calc(20px + 2vw);
+}
+
+.formPlaceDescription {
+  width: calc(350px + 20vw);
+  display: flex;
+  flex-direction: row;
+  height: 4em;
+  row-gap: 5px;
+  column-gap: 10px;
+}
+
+.formEntry2 {
+  display: flex;
+  width: 90%;
+  height: 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #406490;
+  border-radius: 0.25rem;
+}
+
+#file-upload-button {
+  border: 5px solid #406490;
+}
+
+.formEntryDescription {
+  display: flex;
+  width: 90%;
+  height: 4em;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #406490;
+  border-radius: 0.25rem;
+}
+
+.formPlaceAffiche {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  height: 3em;
+  row-gap: 5px;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.addMovieForm {
+  width: calc(350px + 20vw);
+  border-radius: 30px;
+  padding: calc(15px + 1vw);
+  padding-top: calc(5px + 1vw);
+  font-size: large;
+  font-weight: 500;
+  row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.formSend {
+  color: #406490;
+  width: 100px;
+  font-size: calc(1rem + 0.2vw);
+  font-weight: 550;
+  background-color: #B6D8F2;
+  border: 2px solid #406490;
+  border-radius: 0.25rem;
+  height: 30px;
+  align-self: center;
+}
+
+.formPlaceCategories {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  height: 3em;
+  row-gap: 5px;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.formPlaceCategories select {
+  border: 2px solid #406490;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+  font-size: 0.9em;
+  color: #406490;
+}
+
+.AfficheandCategorie {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: calc(20px + 2vw);
+}
+
+.formSend:hover {
+  transform: scale(1.05);
+  ;
+}
+
+.formPlaceDate p {
+  width: 250px
+}

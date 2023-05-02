@@ -9,26 +9,21 @@ function SignUpForm({ setConnection }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = {
-      username,
-      firstname,
-      lastname,
-      email,
-      password,
-    };
+    const formData = { username, firstname, lastname, email, password };
 
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/signup`, formData, { withCredentials: true, credentials: 'include' })
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formData)
       .then((response) => {
+        window.localStorage.setItem('token', response.data.token);
         setConnection(true);
       })
       .catch((error) => {
         console.error(error);
       });
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="connectionForm">

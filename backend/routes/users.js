@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import auth from '../middleware/auth.js';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
+import Likes from '../entities/likes.js';
 import Comments from '../entities/comments.js';
 
 const router = express.Router();
@@ -47,9 +48,8 @@ router.post('/login', function (req, res) {
               expiresIn: '24h',
             }
           );
-          res.cookie('token', token, { httpOnly: true});
-          console.log(req.cookies);
           res.status(200).json({
+            token: token,
             message: 'Logged in successfully',
           });
         })
@@ -84,7 +84,7 @@ router.post('/signup', function (req, res) {
               expiresIn: '24h',
             }
           );
-          res.cookie('token', token, { httpOnly: true});
+          res.cookie('token', token, { httpOnly: true, secure: true });
           res.status(200).json({
             message: 'Logged in successfully',
           });
@@ -103,10 +103,14 @@ router.post('/signup', function (req, res) {
     .catch((error) => res.status(500).json({ error }));
 });
 
-router.delete('/:userId', function (req, res) {
+router.delete('/:username', auth, function (req, res) {
   appDataSource
     .getRepository(User)
-    .delete({ id: req.params.userId })
+    .delete({ username: req.username })
+    .getRepository(Likes)
+    .delete({ username: req.username })
+    .getRepository(Comments)
+    .delete({ username: req.username })
     .then(function () {
       res.status(204).json({ message: 'User successfully deleted' });
     })

@@ -3,6 +3,7 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+//import path from 'path';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import usersRouter from './routes/users.js';
@@ -23,6 +24,7 @@ appDataSource
     app.use(express.json());
     app.use(cookieParser());
     app.use(express.urlencoded({ extended: false }));
+    //app.use('/images', express.static(path.join(__dirname, 'images')));
 
     // Register routes
     apiRouter.get('/', (req, res) => {

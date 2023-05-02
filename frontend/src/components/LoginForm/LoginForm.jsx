@@ -6,7 +6,7 @@ function LoginForm({ setConnection }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
 
     const formData = { email, password };
@@ -14,12 +14,13 @@ function LoginForm({ setConnection }) {
     axios
       .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formData, { withCredentials: true })
       .then((response) => {
+        window.localStorage.setItem('token', response.data.token);
         setConnection(true);
       })
       .catch((error) => {
         console.error(error);
       });
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="connectionForm">

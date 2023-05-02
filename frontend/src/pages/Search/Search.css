@@ -4,11 +4,18 @@
 }
 
 .MovieListP {
-    margin-top: 60px;
+    margin-top: 20px;
     display: flex;
     column-gap: 25px;
     row-gap: 30px;
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: center;
+}
+
+.MovieDisplayed {
+    margin-top: 60px;
+    font-size: x-large;
+    font-weight: 450;
+    color: #5784BA;
 }
