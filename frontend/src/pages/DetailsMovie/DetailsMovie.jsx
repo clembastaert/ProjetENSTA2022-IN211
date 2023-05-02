@@ -65,6 +65,8 @@ function DetailsMovie({ movies }) {
         .catch(() => {
           setSent(false);
         });
+    } else {
+      setLoading(false);
     }
   }, [id, username, connected]);
 

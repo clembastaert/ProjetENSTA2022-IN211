@@ -38,7 +38,7 @@ function Users({ movies }) {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [connected]);
 
   return loading ? (
     <div> </div>
