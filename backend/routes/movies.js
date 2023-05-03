@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
     });
 });
 
+
 router.get('/tmdb', async (req, res) => {
   try {
     for (let j = 1; j < 1000; j++) {
@@ -80,11 +81,12 @@ router.post('/new', auth, function (req, res) {
   const newMovie = MoviesRepository.create({
     title: req.body.title,
     release_date: req.body.release_date,
-    categories: req.body.categories,
+    genre_ids: req.body.category_id,
     description: req.body.description,
-    poster_path: `${req.protocol}://${req.get('host')}/images/${
-      req.file.filename
-    }`,
+    poster_path: req.body.poster_path,
+    popularity: 0,
+    vote_count: 0,
+    vote_average: 0,
   });
   MoviesRepository.insert(newMovie)
     .then(function (newDocument) {
@@ -94,7 +96,7 @@ router.post('/new', auth, function (req, res) {
       console.error(error);
       if (error.code === '23505') {
         res.status(400).json({
-          message: `Movie with title "${newMovie.Title}" already exists`,
+          message: `Movie with title "${newMovie.title}" already exists`,
         });
       } else {
         res.status(500).json({ message: 'Error while creating the Movie' });

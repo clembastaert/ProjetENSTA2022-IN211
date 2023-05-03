@@ -17,3 +17,7 @@ img {
     z-index: 1;
     color: #ffe695;
 }
+
+.movieTitle {
+    height: 50px;
+}

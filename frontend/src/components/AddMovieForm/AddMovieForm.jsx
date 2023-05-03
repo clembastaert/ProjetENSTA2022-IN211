@@ -7,56 +7,30 @@ function AddMovieForm() {
   const [releaseDate, setReleaseDate] = useState('');
   const [description, setDescription] = useState('');
   const [posterPath, setPosterPath] = useState('');
+  const [category, setCategory] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  function SelectInput() {
-    const options = [
-      'Action',
-      'Aventure',
-      'Animation',
-      'Comédie',
-      'Crime',
-      'Documentaire',
-      'Drame',
-      'Familial',
-      'Fantastique',
-      'Histoire',
-      'Horreur',
-      'Musique',
-      'Mystère',
-      'Romance',
-      'Science-Fiction',
-      'Téléfilm',
-      'Thriller',
-      'Guerre',
-      'Western',
-    ];
-    const [selectedOption, setSelectedOption] = useState('');
-
-    const handleOptionChange = (event) => {
-      setSelectedOption(event.target.value);
-    };
-
-    return (
-      <div className="formPlaceCategories">
-        <label className="formEntryCategory" htmlFor="options">
-          Catégorie:{' '}
-        </label>
-        <select
-          id="options"
-          value={selectedOption}
-          onChange={handleOptionChange}
-        >
-          <option value=""> -- Choisir une catégorie -- </option>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+  const categories = [
+    { id: 28, name: 'Action' },
+    { id: 12, name: 'Aventure' },
+    { id: 16, name: 'Animation' },
+    { id: 35, name: 'Comédie' },
+    { id: 80, name: 'Crime' },
+    { id: 99, name: 'Documentaire' },
+    { id: 18, name: 'Drame' },
+    { id: 10751, name: 'Familial' },
+    { id: 14, name: 'Fantastique' },
+    { id: 36, name: 'Histoire' },
+    { id: 27, name: 'Horreur' },
+    { id: 10402, name: 'Musique' },
+    { id: 9648, name: 'Mystère' },
+    { id: 10749, name: 'Romance' },
+    { id: 878, name: 'Science-Fiction' },
+    { id: 10770, name: 'Téléfilm' },
+    { id: 53, name: 'Thriller' },
+    { id: 10752, name: 'Guerre' },
+    { id: 37, name: 'Western' },
+  ];
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
@@ -74,32 +48,47 @@ function AddMovieForm() {
     setPosterPath(event.target.value);
   }
 
+  function handleCategoryChange(event) {
+    setCategory(event.target.value);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post('/movies/new', {
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new`, {
         title,
         release_date: releaseDate,
         description,
         poster_path: posterPath,
-      })
+        category_id: category,
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
       .then((response) => {
         console.log('New movie created:', response.data);
         setTitle('');
         setReleaseDate('');
         setDescription('');
         setPosterPath('');
+        setCategory('');
         setErrorMessage('');
       })
       .catch((error) => {
         console.error(error);
-        setErrorMessage('Error while creating the movie.');
+        if (error.code === '23505') {
+          setErrorMessage('Movie with title' + title + 'already exists.');;
+        } else {
+          setErrorMessage('Error while creating the movie.');
+        };
       });
   }
 
+
   return (
     <div>
-      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
       <form onSubmit={handleSubmit} className="addMovieForm">
         <div className="TitleandDate">
           <label className="formPlaceTitle">
@@ -129,22 +118,33 @@ function AddMovieForm() {
             className="formEntryDescription"
           />
         </label>
-        <div className="AfficheandCategorie">
-          <label className="formPlaceAffiche">
-            <p> Affiche: </p>
-            <div className="uploadFile">
-              <input
-                type="file"
-                id="file"
-                accept=".jpg,.png"
-                value={posterPath}
-                onChange={handlePosterPathChange}
-                className="formEntryAffiche"
-              />
-            </div>
+        <label className="formPlaceAffiche">
+          URL de l'image:
+          <input
+            type="text"
+            value={posterPath}
+            onChange={handlePosterPathChange}
+            className="formEntry2"
+          />
+        </label>
+        <div className="formPlaceCategories">
+          <label className="formEntryCategory" htmlFor="options">
+            Catégorie:{' '}
           </label>
-          <SelectInput />
+          <select
+            id="options"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <option value=""> -- Choisir une catégorie -- </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
+        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
         <button type="submit" className="formSend">
           Ajouter
         </button>
