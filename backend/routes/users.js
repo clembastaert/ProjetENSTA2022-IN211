@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import express from 'express';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bcrypt from 'bcrypt';
@@ -21,6 +22,40 @@ router.get('/comm', function (req, res) {
     .then(function (users) {
       res.json({ users: users });
     });
+});
+
+router.put('/password', auth, function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .findOne({ where: { username: req.username } })
+    .then((user) =>
+      bcrypt.compare(req.body.oldPassword, user.password).then((valid) => {
+        if (!valid) {
+          return res.json({ message: 'Mot de passe incorrect' });
+        }
+        bcrypt.hash(req.body.newPassword, 10).then((hash) => {
+          user.password = hash;
+          appDataSource
+            .getRepository(User)
+            .save(user)
+            .then(() =>
+              res.json({ message: 'Mot de passe modifié avec succès' })
+            )
+            .catch(() =>
+              res.status(500).json({
+                message:
+                  'Une erreur est survenue lors de la modification du mot de passe',
+              })
+            );
+        });
+      })
+    )
+    .catch(() =>
+      res.status(500).json({
+        message:
+          "Une erreur est survenue lors de la recherche de l'utilisateur",
+      })
+    );
 });
 
 router.post('/login', function (req, res) {
@@ -61,8 +96,6 @@ router.post('/login', function (req, res) {
       res.status(500).json({ error });
     });
 });
-
-
 router.post('/signup', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
   userRepository
@@ -106,44 +139,48 @@ router.post('/signup', function (req, res) {
                     message: 'Connexion réussie',
                   });
                 })
-                .catch(function (error) {
-                  console.error(error);
-                  res.status(500).json({ message: 'Erreur de création de l\'utilisateur' });
+                .catch(() => {
+                  res.status(500).json({
+                    message:
+                      "Une erreur est survenue lors de l'enregistrement de l'utilisateur",
+                  });
                 });
             })
-            .catch((error) => res.status(500).json({ error }));
-          const token = jwt.sign(
-            { username: req.body.username },
-            'RANDOM_TOKEN_SECRET',
-            {
-              expiresIn: '24h',
-            }
-          );
-          res.status(200).json({
-            token: token,
-            message: 'Connexion réussie',
-          });
+            .catch(() => {
+              res.status(500).json({
+                message: 'Une erreur est survenue lors de la création du hash',
+              });
+            });
         })
-        .catch((error) => {
-          res.status(500).json({ error });
+        .catch(() => {
+          res.status(500).json({
+            message:
+              "Une erreur est survenue lors de la recherche de l'utilisateur",
+          });
         });
     })
-    .catch((error) => {
-      res.status(500).json({ error });
+    .catch(() => {
+      res.status(500).json({
+        message:
+          "Une erreur est survenue lors de la recherche de l'utilisateur",
+      });
     });
 });
 
-
-
-
-router.delete('/:username', auth, function (req, res) {
+router.delete('/delete', auth, function (req, res) {
   appDataSource
     .getRepository(User)
     .delete({ username: req.username })
-    .getRepository(Likes)
-    .delete({ username: req.username })
-    .getRepository(Comments)
-    .delete({ username: req.username })
+    .then(function () {
+      return appDataSource
+        .getRepository(Likes)
+        .delete({ username: req.username });
+    })
+    .then(function () {
+      return appDataSource
+        .getRepository(Comments)
+        .delete({ username: req.username });
+    })
     .then(function () {
       res.status(204).json({ message: 'User successfully deleted' });
     })

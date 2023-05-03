@@ -24,7 +24,7 @@ function Users({ movies }) {
             },
           }
         );
-        setUsername(response.data.username);
+        setUsername(response.data);
         setConnection(true);
       } catch (error) {
         console.error(error);
@@ -45,7 +45,11 @@ function Users({ movies }) {
   ) : connected ? (
     <div className="User-connected">
       <h1> Bonjour @{username} </h1>
-      <DropdownMenu movies={movies} username={username} />
+      <DropdownMenu
+        movies={movies}
+        username={username}
+        setConnection={setConnection}
+      />
       <div
         className="disconnection"
         onClick={() => {

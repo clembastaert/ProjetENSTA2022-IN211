@@ -11,7 +11,7 @@ export default function auth(req, res, next) {
   try {
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     const username = decodedToken.username;
-    req.username = { username };
+    req.username = username;
     next();
   } catch (error) {
     res.status(401).json({ error });

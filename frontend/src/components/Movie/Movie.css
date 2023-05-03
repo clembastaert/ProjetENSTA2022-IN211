@@ -10,6 +10,7 @@
 
 img {
     border-radius: 10px;
+    max-width: 200px;
 }
 
 .movie:hover {

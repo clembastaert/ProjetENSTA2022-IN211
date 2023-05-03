@@ -17,11 +17,15 @@
 }
 
 .list:hover {
-    color:#ffe695;
+    color: #ffe695;
 }
 
-.fa-trash:hover{
+.fa-trash:hover {
     color: red;
+}
+
+.fa-pen:hover {
+    color: #ffe695;
 }
 
 .DeleteUser {

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { useState } from 'react';
 import axios from 'axios';
 import './AddMovieForm.css';
@@ -55,18 +56,21 @@ function AddMovieForm() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new`, {
-        title,
-        release_date: releaseDate,
-        description,
-        poster_path: posterPath,
-        category_id: category,
-      },
+      .post(
+        `${import.meta.env.VITE_BACKDEND_URL}/movies/new`,
+        {
+          title,
+          release_date: releaseDate,
+          description,
+          poster_path: posterPath,
+          category_id: category,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
-        })
+        }
+      )
       .then((response) => {
         console.log('New movie created:', response.data);
         setTitle('');
@@ -79,13 +83,12 @@ function AddMovieForm() {
       .catch((error) => {
         console.error(error);
         if (error.code === '23505') {
-          setErrorMessage('Movie with title' + title + 'already exists.');;
+          setErrorMessage('Movie with title' + title + 'already exists.');
         } else {
           setErrorMessage('Error while creating the movie.');
-        };
+        }
       });
   }
-
 
   return (
     <div>
@@ -131,11 +134,7 @@ function AddMovieForm() {
           <label className="formEntryCategory" htmlFor="options">
             Catégorie:{' '}
           </label>
-          <select
-            id="options"
-            value={category}
-            onChange={handleCategoryChange}
-          >
+          <select id="options" value={category} onChange={handleCategoryChange}>
             <option value=""> -- Choisir une catégorie -- </option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>

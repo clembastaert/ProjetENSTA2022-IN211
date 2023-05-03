@@ -7,7 +7,6 @@ function LoginForm({ setConnection }) {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-
   function handleSubmit(event) {
     event.preventDefault();
 

@@ -1,10 +1,14 @@
 import './Search.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Movie from '../../components/Movie/Movie';
 
 function Search({ movieName, movies }) {
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 45;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [movieName]);
 
   const filteredMovies = movies.filter((movie) => {
     return movie.title.toLowerCase().includes(movieName.toLowerCase());
@@ -12,7 +16,10 @@ function Search({ movieName, movies }) {
 
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = filteredMovies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const currentMovies = filteredMovies.slice(
+    indexOfFirstMovie,
+    indexOfLastMovie
+  );
 
   const totalPages = Math.ceil(filteredMovies.length / moviesPerPage);
 
@@ -49,11 +56,19 @@ function Search({ movieName, movies }) {
     );
   }
   paginationButtons.push(
-    <button key={currentPage} onClick={() => handlePageClick(currentPage)} className="active">
+    <button
+      key={currentPage}
+      onClick={() => handlePageClick(currentPage)}
+      className="active"
+    >
       {currentPage}
     </button>
   );
-  for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
+  for (
+    let i = currentPage + 1;
+    i <= Math.min(totalPages, currentPage + 2);
+    i++
+  ) {
     paginationButtons.push(
       <button key={i} onClick={() => handlePageClick(i)}>
         {i}

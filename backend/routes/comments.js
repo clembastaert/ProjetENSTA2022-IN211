@@ -5,11 +5,26 @@ import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.get('/recup', auth, async (req, res) => {
+  const commentsRepository = appDataSource.getRepository(Comments);
+  try {
+    const comments = await commentsRepository.find({
+      where: { username: req.username },
+    });
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: 'Erreur lors de la récupération des commentaires' });
+  }
+});
+
 router.post('/new', auth, function (req, res) {
   const commentsRepository = appDataSource.getRepository(Comments);
   const newComment = commentsRepository.create({
-    id_film: req.body.id_film,
     username: req.username,
+    id_film: req.body.id_film,
     mark: req.body.mark,
     description: req.body.description,
   });
@@ -47,28 +62,11 @@ router.get('/:id_film', async (req, res) => {
   }
 });
 
-router.get('/u/u/:username', auth, async (req, res) => {
-  const commentsRepository = appDataSource.getRepository(Comments);
-  const { username } = req.username;
-
-  try {
-    const comments = await commentsRepository.find({
-      where: { username },
-    });
-    res.status(200).json(comments);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: 'Erreur lors de la récupération des commentaires' });
-  }
-});
-
-router.get('/:id_film/:username', auth, function (req, res) {
+router.get('/comment/:id_film', auth, function (req, res) {
   appDataSource
     .getRepository(Comments)
     .findOne({
-      where: { id_film: req.params.id_film, username: req.params.username },
+      where: { id_film: req.params.id_film, username: req.username },
     })
     .then(function (elt) {
       if (elt !== null) {

@@ -47,7 +47,7 @@ function DetailsMovie({ movies }) {
   useEffect(() => {
     if (connected) {
       axios
-        .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`, {
+        .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/like/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -59,14 +59,11 @@ function DetailsMovie({ movies }) {
           setMovieLiked(false);
         });
       axios
-        .get(
-          `${import.meta.env.VITE_BACKDEND_URL}/comments/${id}/${username}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        )
+        .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/comment/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
         .then(() => {
           setSent(true);
         })
@@ -83,7 +80,7 @@ function DetailsMovie({ movies }) {
 
   function handleDelete() {
     axios
-      .delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`, {
+      .delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/like/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -99,7 +96,7 @@ function DetailsMovie({ movies }) {
   function handleAdd() {
     axios
       .post(
-        `${import.meta.env.VITE_BACKDEND_URL}/movies/${id}/${username}`,
+        `${import.meta.env.VITE_BACKDEND_URL}/movies/${id}`,
         {},
         {
           headers: {
@@ -148,12 +145,12 @@ function DetailsMovie({ movies }) {
             ))}
         </div>
       </div>
-      {!loading && (
+      {!loading && !sent && (
         <Ratings
           connected={connected}
           id_film={id}
           sent={sent}
-          isSent={setSent}
+          setSent={setSent}
           username={username}
         />
       )}

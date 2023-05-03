@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import Movie from '../Movie/Movie';
 import AddMovieForm from '../AddMovieForm/AddMovieForm';
+import ChangePassword from '../ChangePassword/ChangePassword';
 
-function DropdownMenu({ username, movies }) {
+function DropdownMenu({ username, movies, setConnection }) {
   const [movieList, setMovieList] = useState(false);
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [commentList, setCommentList] = useState(false);
@@ -20,7 +21,7 @@ function DropdownMenu({ username, movies }) {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/${username}`, {
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/recup`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -32,7 +33,7 @@ function DropdownMenu({ username, movies }) {
         console.error(error);
       });
     axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/u/u/${username}`, {
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/comments/recup`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -47,12 +48,14 @@ function DropdownMenu({ username, movies }) {
 
   function deleteUser() {
     axios
-      .delete(`${import.meta.env.VITE_BACKDEND_URL}/users/${username}`, {
+      .delete(`${import.meta.env.VITE_BACKDEND_URL}/users/delete`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
       .then(() => {
+        setConnection(false);
+        localStorage.clear('token');
         console.log(`User ${username} successfully deleted`);
       })
       .catch((error) => {
@@ -159,9 +162,12 @@ function DropdownMenu({ username, movies }) {
         <h2> Paramètres </h2>{' '}
       </div>
       {parameters && (
-        <div className="DeleteUser">
-          <i class="fa-solid fa-trash" onClick={deleteUser}></i>
-          <p> Supprimer son compte </p>
+        <div className="parameters">
+          <ChangePassword />
+          <div className="DeleteUser">
+            <i class="fa-solid fa-trash" onClick={deleteUser}></i>
+            <p> Supprimer son compte </p>
+          </div>
         </div>
       )}
     </div>

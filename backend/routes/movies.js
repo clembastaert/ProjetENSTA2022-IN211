@@ -5,8 +5,6 @@ import { appDataSource } from '../datasource.js';
 import Movies from '../entities/movies.js';
 import Likes from '../entities/likes.js';
 import auth from '../middleware/auth.js';
-//import multer from '../middleware/multer-config.js';
-
 
 const router = express.Router();
 
@@ -22,7 +20,6 @@ router.get('/', (req, res) => {
       res.status(500).json({ message: 'Error while finding movies' });
     });
 });
-
 
 router.get('/tmdb', async (req, res) => {
   try {
@@ -75,7 +72,6 @@ router.get('/tmdb', async (req, res) => {
   }
 });
 
-// il faudrait ajouter multer ici
 router.post('/new', auth, function (req, res) {
   const MoviesRepository = appDataSource.getRepository(Movies);
   const newMovie = MoviesRepository.create({
@@ -104,13 +100,14 @@ router.post('/new', auth, function (req, res) {
     });
 });
 
-router.get('/:username', auth, async (req, res) => {
+router.get('/recup', auth, async (req, res) => {
   const likesRepository = appDataSource.getRepository(Likes);
   const moviesRepository = appDataSource.getRepository(Movies);
-  const { username } = req.username;
 
   try {
-    const likesByUser = await likesRepository.find({ where: { username } });
+    const likesByUser = await likesRepository.find({
+      where: { username: req.username },
+    });
     const idFilmsLikedByUser = likesByUser.map((like) => like.id_film);
     const moviesLikedByUser = await moviesRepository.find({
       where: { id: In(idFilmsLikedByUser) },
@@ -124,11 +121,11 @@ router.get('/:username', auth, async (req, res) => {
   }
 });
 
-router.get('/:id_film/:username', auth, function (req, res) {
+router.get('/like/:id_film', auth, function (req, res) {
   appDataSource
     .getRepository(Likes)
     .findOne({
-      where: { id_film: req.params.id_film, username: req.params.username },
+      where: { id_film: req.params.id_film, username: req.username },
     })
     .then(function (like) {
       if (like !== null) {
@@ -143,12 +140,11 @@ router.get('/:id_film/:username', auth, function (req, res) {
     });
 });
 
-router.post('/:id_film/:username', auth, async (req, res) => {
+router.post('/:id_film', auth, async (req, res) => {
   const likesRepository = appDataSource.getRepository(Likes);
-  const { id_film, username } = req.params;
   const newLike = likesRepository.create({
-    id_film: id_film,
-    username: username,
+    id_film: req.params.id_film,
+    username: req.username,
     like: true,
   });
 
@@ -169,10 +165,10 @@ router.post('/:id_film/:username', auth, async (req, res) => {
     });
 });
 
-router.delete('/:id_film/:username', auth, function (req, res) {
+router.delete('/like/:id_film', auth, function (req, res) {
   appDataSource
     .getRepository(Likes)
-    .delete({ id_film: req.params.id_film, username: req.params.username })
+    .delete({ id_film: req.params.id_film, username: req.username })
     .then(function () {
       res.status(204).json({ message: 'Like successfully deleted' });
     })
