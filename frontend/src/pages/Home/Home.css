@@ -16,7 +16,7 @@
 }
 
 .MovieList::-webkit-scrollbar-thumb {
-    background-color: #fc9149;
+    background-color: #ffe695;
     border-radius: 5px;
     cursor: grab;
 }
@@ -38,5 +38,5 @@
 }
 
 .LinkCM:hover {
-    color: #fc9149;
+    color: #ffe695;
 }

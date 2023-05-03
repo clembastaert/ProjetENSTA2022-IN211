@@ -22,7 +22,7 @@
   color: #dadada;
   background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #a05523;
+  border: 2px solid #ffe695;
 }
 
 .formPlace {
@@ -77,6 +77,11 @@
   margin-block-end: 0px;
   margin-left: 10px;
   font-weight: 600;
+}
+
+.disconnection:hover {
+  color: #ffe695;
+  transform: scale(1.03);
 }
 
 

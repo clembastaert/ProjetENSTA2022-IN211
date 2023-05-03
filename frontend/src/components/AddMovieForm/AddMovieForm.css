@@ -42,12 +42,12 @@
   color: #dadada;
   background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #a05523;
+  border: 2px solid #ffe695;
   border-radius: 0.25rem;
 }
 
 #file-upload-button {
-  border: 5px solid #a05523;
+  border: 5px solid #ffe695;
 }
 
 .formEntryDescription {
@@ -60,7 +60,7 @@
   color: #dadada;
   background-color: #131313;
   background-clip: padding-box;
-  border: 2px solid #a05523;
+  border: 2px solid #ffe695;
   border-radius: 0.25rem;
 }
 
@@ -88,12 +88,12 @@
 }
 
 .formSend {
-  color: #a05523;
+  color: #ffe695;
   width: 100px;
   font-size: calc(1rem + 0.2vw);
   font-weight: 550;
   background-color: #1a1a1a;
-  border: 2px solid #a05523;
+  border: 2px solid #ffe695;
   border-radius: 0.25rem;
   height: 30px;
   align-self: center;
@@ -110,12 +110,12 @@
 }
 
 .formPlaceCategories select {
-  border: 2px solid #a05523;
+  border: 2px solid #ffe695;
   border-radius: 5px;
   padding: 5px;
   background-color: #131313;
   font-size: 0.9em;
-  color: #a05523;
+  color: #ffe695;
 }
 
 .AfficheandCategorie {
@@ -127,7 +127,6 @@
 
 .formSend:hover {
   transform: scale(1.05);
-  ;
 }
 
 .formPlaceDate p {
