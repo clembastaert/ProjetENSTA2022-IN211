@@ -8,10 +8,10 @@ function ChangePassword() {
   const [modify, setModify] = useState(false);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleChangePassword = (event) => {
     event.preventDefault();
-
     const formData = { oldPassword, newPassword };
 
     axios
@@ -20,8 +20,10 @@ function ChangePassword() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
-      .then(() => {
-        console.log(`Password sucessfully changed`);
+      .then((response) => {
+        setMessage(response.data.message);
+        setOldPassword('');
+        setNewPassword('');
       })
       .catch((error) => {
         console.error(error);
@@ -35,12 +37,16 @@ function ChangePassword() {
           className="fa-solid fa-pen"
           onClick={() => {
             setModify(!modify);
+            setNewPassword('');
+            setMessage('');
+            setOldPassword('');
           }}
         ></i>
         <p> Changer son mot de passe </p>
       </div>
       {modify && (
         <form onSubmit={handleChangePassword} className="writeOldNew">
+          {message && <p className="pdMessage">*{message}</p>}
           <div className="formPlacePassword">
             <label htmlFor="oldPassword"> Ancien mot de passe :</label>
             <input

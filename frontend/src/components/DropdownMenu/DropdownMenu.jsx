@@ -65,14 +65,11 @@ function DropdownMenu({ username, movies, setConnection }) {
 
   function deleteComment(movieid) {
     axios
-      .delete(
-        `${import.meta.env.VITE_BACKDEND_URL}/comments/${movieid}/${username}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      )
+      .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/${movieid}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then(() => {
         console.log(`Comment successfully deleted`);
         setComments((prevComments) =>

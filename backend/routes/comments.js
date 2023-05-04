@@ -81,7 +81,7 @@ router.get('/comment/:id_film', auth, function (req, res) {
     });
 });
 
-router.put('/:id_film/:username', auth, function (req, res) {
+router.put('/:id_film', auth, function (req, res) {
   const id_film = req.params.id_film;
   const username = req.username;
   const { description, mark } = req.body;
@@ -109,7 +109,7 @@ router.put('/:id_film/:username', auth, function (req, res) {
     });
 });
 
-router.delete('/:id_film/:username', auth, function (req, res) {
+router.delete('/:id_film', auth, function (req, res) {
   appDataSource
     .getRepository(Comments)
     .delete({ id_film: req.params.id_film, username: req.username })

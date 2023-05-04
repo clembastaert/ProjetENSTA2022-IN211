@@ -7,3 +7,9 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.titleCategories {
+    margin-block-start: 3em;
+    margin-block-end: 0em;
+    color: #ffe695;
+}
