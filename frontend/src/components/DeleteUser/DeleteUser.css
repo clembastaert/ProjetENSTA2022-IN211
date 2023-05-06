@@ -1,0 +1,8 @@
+.DeleteUser {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    font-weight: 600;
+    font-size: large;
+}

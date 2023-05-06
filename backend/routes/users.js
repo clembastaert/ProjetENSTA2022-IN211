@@ -96,6 +96,7 @@ router.post('/login', function (req, res) {
       res.status(500).json({ error });
     });
 });
+
 router.post('/signup', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
   userRepository
@@ -126,9 +127,9 @@ router.post('/signup', function (req, res) {
               });
               userRepository
                 .insert(newUser)
-                .then(function (user) {
+                .then(function () {
                   const token = jwt.sign(
-                    { username: user.username },
+                    { username: newUser.username },
                     'RANDOM_TOKEN_SECRET',
                     {
                       expiresIn: '24h',

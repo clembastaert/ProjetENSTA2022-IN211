@@ -1,12 +1,9 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { forwardRef, useState } from 'react';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import Logo from '../../assets/popcorn.png';
 
-function Navbar({ movieName, setMovieName }) {
+const Navbar = forwardRef(({ movieName, setMovieName }, ref) => {
   const [movieNameDisplayed, setMovieNameDisplayed] = useState(movieName);
   const navigate = useNavigate();
 
@@ -18,14 +15,9 @@ function Navbar({ movieName, setMovieName }) {
       setMovieNameDisplayed('');
     }
   };
-  const handleSubmit = (event) => {
-    setMovieName(event.target.value);
-    navigate('/search');
-    setMovieNameDisplayed('');
-  };
 
   return (
-    <nav className="navbar-sticky">
+    <nav className="navbar-sticky" ref={ref}>
       <div className="navbar-left">
         <Link className="LinkNB" to="/">
           <div className="navbar--logo-holder">
@@ -51,6 +43,6 @@ function Navbar({ movieName, setMovieName }) {
       </div>
     </nav>
   );
-}
+});
 
 export default Navbar;

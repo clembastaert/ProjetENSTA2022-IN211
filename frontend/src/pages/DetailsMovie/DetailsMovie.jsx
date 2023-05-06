@@ -78,7 +78,7 @@ function DetailsMovie({ movies }) {
     }
   }, [id, username, connected]);
 
-  function handleDelete() {
+  function handleDel() {
     axios
       .delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/like/${id}`, {
         headers: {
@@ -131,10 +131,7 @@ function DetailsMovie({ movies }) {
             connected &&
             (movieLiked ? (
               <div className="addmovie">
-                <i
-                  className="fa-solid fa-square-minus"
-                  onClick={handleDelete}
-                ></i>
+                <i className="fa-solid fa-square-minus" onClick={handleDel}></i>
                 <p> Supprimer ce film de votre liste </p>
               </div>
             ) : (
@@ -149,7 +146,6 @@ function DetailsMovie({ movies }) {
         <Ratings
           connected={connected}
           id_film={id}
-          sent={sent}
           setSent={setSent}
           username={username}
         />

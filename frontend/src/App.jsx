@@ -9,13 +9,11 @@ import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
 import DetailsMovie from './pages/DetailsMovie/DetailsMovie';
 
-
 function useFetchMovies() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const allMovies = [];
       const response = await axios.get(
         `${import.meta.env.VITE_BACKDEND_URL}/movies/`
       );
