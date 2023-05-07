@@ -3,6 +3,7 @@
 import './ChangePassword.css';
 import axios from 'axios';
 import { useState } from 'react';
+import FormPlace from '../FormPlace/FormPlace';
 
 function ChangePassword() {
   const [modify, setModify] = useState(false);
@@ -47,29 +48,21 @@ function ChangePassword() {
       {modify && (
         <form onSubmit={handleChangePassword} className="writeOldNew">
           {message && <p className="pdMessage">*{message}</p>}
-          <div className="formPlacePassword">
-            <label htmlFor="oldPassword"> Ancien mot de passe :</label>
-            <input
-              type="password"
-              className="formEntryPassword"
-              id="oldPassword"
-              name="oldPassword"
-              value={oldPassword}
-              onChange={(event) => setOldPassword(event.target.value)}
-            />
-          </div>
-          <div className="formPlacePassword">
-            <label htmlFor="newPassword">Nouveau mot de passe :</label>
-            <input
-              type="password"
-              className="formEntryPassword"
-              id="Password"
-              name="newPassword"
-              value={newPassword}
-              onChange={(event) => setNewPassword(event.target.value)}
-            />
-          </div>
-          <button type="submit" className="formSend">
+          <FormPlace
+            type="password"
+            label="Ancien mot de passe"
+            name="password"
+            value={oldPassword}
+            onChange={(event) => setOldPassword(event.target.value)}
+          />
+          <FormPlace
+            type="password"
+            label="Nouveau mot de passe"
+            name="password"
+            value={newPassword}
+            onChange={(event) => setNewPassword(event.target.value)}
+          />
+          <button type="submit" className="formSend margin-top">
             {' '}
             Changer
           </button>

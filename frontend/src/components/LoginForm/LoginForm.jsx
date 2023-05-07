@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
 import axios from 'axios';
+import FormPlace from '../FormPlace/FormPlace';
 
 function LoginForm({ setConnection }) {
   const [email, setEmail] = useState('');
@@ -27,32 +28,21 @@ function LoginForm({ setConnection }) {
   return (
     <form onSubmit={handleSubmit} className="connectionForm">
       <h1 className="formTitle"> Se connecter </h1>
-      <div className="formPlace">
-        <label htmlFor="username">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          className="formEntry"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        />
-      </div>
-      <div className="formPlace">
-        <label htmlFor="password">Mot de passe</label>
-        <div className="password-input">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="formEntry"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </div>
-      </div>
+      <FormPlace
+        label="Email"
+        name="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        required
+      />
+      <FormPlace
+        type="password"
+        label="Mot de passe"
+        name="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        required
+      />
       <div>
         <button type="submit" className="formButton">
           Connexion
