@@ -131,12 +131,12 @@ function DetailsMovie({ movies }) {
             connected &&
             (movieLiked ? (
               <div className="addmovie">
-                <i className="fa-solid fa-square-minus" onClick={handleDel}></i>
+                <i className="fa-solid fa-circle-minus" onClick={handleDel}></i>
                 <p> Supprimer ce film de votre liste </p>
               </div>
             ) : (
               <div className="addmovie">
-                <i className="fa-solid fa-square-plus" onClick={handleAdd}></i>
+                <i className="fa-solid fa-circle-plus" onClick={handleAdd}></i>
                 <p> Ajouter ce film à votre liste </p>
               </div>
             ))}

@@ -1,12 +1,13 @@
 .Comments {
     margin-top: 30px;
     display: flex;
-    flex-direction: column;
+    border: 3px solid #151515;
+    flex-direction: column-reverse;
     margin-left: calc(25vw - 100px);
     margin-right: calc(25vw - 100px);
     border-radius: 15px;
     padding: 10px;
-    border: 3px solid #ffe695;
+    row-gap: 10px;
     background-color: #1a1a1a;
 }
 
@@ -27,17 +28,12 @@
     flex-direction: row;
 }
 
-.Comment {
+.Comment:not(:first-child) {
+    padding-bottom: 10px;
     border-bottom: 1px dotted #ffe695;
-    margin-bottom: 10px;
 }
 
 .Mark {
     display: flex;
     flex-direction: row;
-}
-
-.Comments {
-    display: flex;
-    flex-direction: column-reverse;
 }

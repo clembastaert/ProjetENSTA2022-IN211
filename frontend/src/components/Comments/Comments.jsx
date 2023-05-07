@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import './Comments.css';
 import { Rating } from 'react-simple-star-rating';
 

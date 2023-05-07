@@ -48,7 +48,9 @@ img {
 
 .fa-solid {
     align-self: center;
+    /* color: #ffe695; */
     transform: scale(1.1);
+    border-radius: 15px;
 }
 
 .fa-solid:hover {
