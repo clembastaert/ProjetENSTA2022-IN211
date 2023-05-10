@@ -1,6 +1,7 @@
 import './Search.css';
 import React, { useEffect, useState } from 'react';
 import Movie from '../../components/Movie/Movie';
+import generatePaginationButtons from '../../pagination';
 
 function Search({ movieName, movies }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,54 +38,11 @@ function Search({ movieName, movies }) {
   }
 
   // Générer les boutons de pagination
-  const paginationButtons = [];
-  if (currentPage > 3) {
-    paginationButtons.push(
-      <button key={1} onClick={() => handlePageClick(1)}>
-        1
-      </button>
-    );
-    if (currentPage > 4) {
-      paginationButtons.push(<span key="ellipsis1">...</span>);
-    }
-  }
-  for (let i = Math.max(1, currentPage - 2); i < currentPage; i++) {
-    paginationButtons.push(
-      <button key={i} onClick={() => handlePageClick(i)}>
-        {i}
-      </button>
-    );
-  }
-  paginationButtons.push(
-    <button
-      key={currentPage}
-      onClick={() => handlePageClick(currentPage)}
-      className="active"
-    >
-      {currentPage}
-    </button>
-  );
-  for (
-    let i = currentPage + 1;
-    i <= Math.min(totalPages, currentPage + 2);
-    i++
-  ) {
-    paginationButtons.push(
-      <button key={i} onClick={() => handlePageClick(i)}>
-        {i}
-      </button>
-    );
-  }
-  if (currentPage < totalPages - 2) {
-    if (currentPage < totalPages - 3) {
-      paginationButtons.push(<span key="ellipsis2">...</span>);
-    }
-    paginationButtons.push(
-      <button key={totalPages} onClick={() => handlePageClick(totalPages)}>
-        {totalPages}
-      </button>
-    );
-  }
+  const paginationButtons = generatePaginationButtons(
+    currentPage,
+    totalPages,
+    handlePageClick
+  )
 
   return (
     <div>
